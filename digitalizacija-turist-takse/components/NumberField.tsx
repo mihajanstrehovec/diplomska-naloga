@@ -8,7 +8,8 @@ const NumberField = ({
     placeholder,
     min = -Infinity,
     max = Infinity,
-    className
+    className,
+    prefix
   }: {
     name: string
     label?: string
@@ -16,6 +17,7 @@ const NumberField = ({
     min?: number
     max?: number
     className?: string
+    prefix?: string
   }) => {
     const [field, meta, helpers] = useField(name)
   
@@ -25,12 +27,12 @@ const NumberField = ({
                 <InputNumber
                 onValueChange={(e) => helpers.setValue(e.value)}
                 value={field.value}
-                mode="decimal"
+                useGrouping={false}
                 min={min}
                 max={max}
                 className={meta.touched && meta.error ? 'p-invalid' : ''}
                 placeholder={placeholder}
-                prefix="Number of guests "
+                prefix={prefix}
                 />
             </div>
             {meta.touched && meta.error ? (
