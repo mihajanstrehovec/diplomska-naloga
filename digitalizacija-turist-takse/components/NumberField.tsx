@@ -22,17 +22,17 @@ const NumberField = ({
     const [field, meta, helpers] = useField(name)
   
     return (
-        <div className="flex align-items-center justify-content-center">
+        <div className="flex flex-wrap align-items-center justify-content-center">
             <div className='flex align-items-center justify-content-center col-12'>
                 <InputNumber
-                onValueChange={(e) => helpers.setValue(e.value)}
-                value={field.value}
-                useGrouping={false}
-                min={min}
-                max={max}
-                className={meta.touched && meta.error ? 'p-invalid' : ''}
-                placeholder={placeholder}
-                prefix={prefix}
+                    onValueChange={(e) => helpers.setValue(e.value)}
+                    value={field.value}
+                    useGrouping={false}
+                    min={min}
+                    max={max}
+                    className={"fieldStyle" && meta.touched &&  meta.error ? 'p-invalid fieldStyle' : "fieldStyle"}
+                    placeholder={placeholder}
+                    prefix={prefix}
                 />
             </div>
             {meta.touched && meta.error ? (

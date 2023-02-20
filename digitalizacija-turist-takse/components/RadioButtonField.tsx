@@ -13,7 +13,7 @@ const RadioButtonField = ({ name, label }: { name: string; label: Array<string> 
           onBlur={field.onBlur}
           name={name}
           value={label[0]}
-          checked={field.value === 'Male'}
+          checked={field.value === 'male'}
           className={meta.touched && meta.error ? 'p-invalid' : ''}
         />
 
@@ -25,7 +25,7 @@ const RadioButtonField = ({ name, label }: { name: string; label: Array<string> 
           onBlur={field.onBlur}
           name={name}
           value={label[1]}
-          checked={field.value === 'Female'}
+          checked={field.value === 'female'}
           className={meta.touched && meta.error ? 'p-invalid ml-4' : 'ml-4'}
         />
         <label htmlFor={name + label[1]}>{label[1]}</label>

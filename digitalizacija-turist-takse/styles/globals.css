@@ -16,7 +16,7 @@ body {
     max-width: 1480px;
     margin: 0 auto;
     padding: 0 1.5rem;
-    min-height: 93vh;
+    min-height: 90vh;
 }
 
 .main {
@@ -62,4 +62,82 @@ body {
 }
 .dejmi2{
     background-color: #c80a0a;
+}
+
+.fieldStyle{
+    width:inherit;
+}
+
+.p-inputnumber-input{
+    width:inherit;
+}
+
+
+.p-calendar{
+    width:inherit!important;
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight{
+    border-color: #FFB800!important;
+    background: #FFB800!important;
+}
+
+.p-radiobutton-box:hover{
+    border-color: #FFB800!important;
+   
+}
+
+input:hover{
+    border-color: #FFB800!important;
+   
+}
+
+input:focus{
+    border-color: #FFB800!important;
+    box-shadow: 0 0 5px #FFB800!important;
+}
+
+.p-inputwrapper-focus{
+    border-color: #FFB800!important;
+    box-shadow: 0 0 5px #FFB800!important;
+}
+
+.p-dropdown:hover{
+    border-color: #FFB800!important;
+}
+
+.p-button-rounded:focus{
+    border-color: #FFB800!important;
+    box-shadow: 0 0 5px #FFB800!important;
+}
+
+.p-autocomplete-dropdown{
+    background: #FFB800!important;
+    border: #FFB800!important;
+}
+
+.checkinfo{
+    color: #828282;
+}
+
+.p-divider{
+    border-color: #828282;
+    color: #828282;
+}
+
+.checkinfocont{
+    width: inherit!important;
+}
+
+#email{
+    opacity: 0.7;
+}
+
+.payBttn{
+    background-color: #FFB800!important;
+    border-color: #FFB800!important;
+}
+
+.payBttn:focus{
+    box-shadow: 0 0 5px #FFB800!important;
 }

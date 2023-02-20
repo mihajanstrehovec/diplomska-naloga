@@ -25,5 +25,9 @@ export const submitSchema = {
   numberOfGuests: number().typeError('Enter number of guests').required('Enter number of guests'),
   checkInDate: date().typeError('Select check in date').required('Select check in date'),
   checkOutDate: date().typeError('Select check out date').required('Select check out date'),
-  guests: array().of(guestValidationSchema)
+  guests: array().of(guestValidationSchema).min(1, 'At least 1 guest is required.').required('Guests required.')
 }
+
+export const guestsValidationSchema = object().shape({
+  guests: array().of(guestValidationSchema).min(1, 'At least 1 guest is required.').required('Guests required.')
+  })

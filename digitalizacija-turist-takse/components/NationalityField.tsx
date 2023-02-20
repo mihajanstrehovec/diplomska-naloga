@@ -7,11 +7,11 @@ const NationalityField = ({ label, name }: { label: string; name: string }) => {
   const [countries, setCountries] = useState<iCountry[]>([])
   const [selectedCountry, setSelectedCountry] = useState<iCountry>()
   const [filteredCountries, setFilteredCountries] = useState<iCountry[]>([])
-  // const [field, meta, helpers] = useField("guest.1.nationality")
+  const [field, meta, helpers] = useField(name)
 
   useEffect(() => {
     if (selectedCountry) {
-      // helpers.setValue(selectedCountry.code)
+      helpers.setValue(selectedCountry.code)
     }
   }, [selectedCountry]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -35,31 +35,31 @@ const NationalityField = ({ label, name }: { label: string; name: string }) => {
   const itemTemplate = (item: iCountry) => {
     return (
       <div className="country-item" style={{ display: 'flex', gap: 10 }}>
-        {/* <img alt={item.name} src={'/img/flag_placeholder.png'} className={`flag flag-${item.code.toLowerCase()}`} /> */}
+        <img alt={item.name} src={'/img/flag_placeholder.png'} className={`flag flag-${item.code.toLowerCase()}`} />
         <div>{item.name}</div>
       </div>
     )
   }
 
   return (
-    <div className="field">
-      <label htmlFor={name}>{label}</label>
-      <NationalityField
-        //   @ts-ignore
-        value={countries.find((c) => c.code === field.value)?.name}
-        suggestions={filteredCountries}
-        completeMethod={searchCountry}
-        field="name"
-        dropdown
-        forceSelection
-        dropdownAutoFocus
-        itemTemplate={itemTemplate}
-        //   @ts-ignore
-        onChange={(e) => setSelectedCountry(e.value)}
-        aria-label="Countries"
-        // className={meta.touched && meta.error ? 'p-invalid' : ''}
-      />
-      {/* {meta.touched && meta.error ? <small className="p-error block">{meta.error}</small> : null} */}
+    <div className="flex flex-wrap align-items-center justify-content-center">
+            <div className='flex align-items-center justify-content-center col-12'>
+              <AutoComplete
+                value={countries.find((c) => c.code === field.value)?.name}
+                suggestions={filteredCountries}
+                completeMethod={searchCountry}
+                field="name"
+                dropdown
+                forceSelection
+                dropdownAutoFocus
+                itemTemplate={itemTemplate}
+                onChange={(e) => setSelectedCountry(e.value)}
+                aria-label="Countries"
+                className={"fieldStyle" && meta.touched && meta.error ? 'p-invalid fieldStyle' : 'fieldStyle'}
+                placeholder="Nationality"
+              />
+              {meta.touched && meta.error ? <small className="p-error block">{meta.error}</small> : null}
+            </div>
     </div>
   )
 }

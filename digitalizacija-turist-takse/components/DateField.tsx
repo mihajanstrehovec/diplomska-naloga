@@ -28,7 +28,7 @@ const DateField = ({
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 name={name}
-                className={meta.touched && meta.error ? 'p-invalid' : ''}
+                className={'fieldStyle' && meta.touched && meta.error ? 'p-invalid' : 'fieldStyle'}
                 minDate={minDate}
                 maxDate={maxDate}
             />

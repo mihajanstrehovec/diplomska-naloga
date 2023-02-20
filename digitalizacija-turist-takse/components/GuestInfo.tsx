@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 import {FieldArray, Formik, Field, Form as FormikForm} from 'formik'
-import { checkInValidationSchema, guestValidationSchema } from '@/helpers/form-helpers'
+import { checkInValidationSchema, guestValidationSchema, submitSchema, guestsValidationSchema } from '@/helpers/form-helpers'
 import TextField from './TextField'
 import NumberField from './NumberField'
 import DateField from './DateField'
@@ -49,11 +49,11 @@ export interface iGuest {
   export const initialState: FormValues = {
     mainGuestName: 'janez',
     mainGuestEmail: 'janez@gmail.com',
-    numberOfGuests: 0,
+    numberOfGuests: 2,
     numberOfPets: 0,
     checkInDate: new Date(),
     checkOutDate: new Date(),
-    guests: [emptyGuest],
+    guests: [],
   }
 
 const GuestInfo = () =>{
@@ -69,8 +69,7 @@ const GuestInfo = () =>{
     ]
 
     const numOfGuests = 2
-    let guests = Array(numOfGuests).fill(emptyGuest)
-    console.log(guests)
+    let guests = Array(numOfGuests).fill(undefined)
   
 
     return (
@@ -79,7 +78,10 @@ const GuestInfo = () =>{
                 initialValues={initialState}
                 onSubmit={values =>{
                     console.log(values)
-                }}>
+
+                }}
+                validationSchema={guestsValidationSchema}
+                >
                     <FormikForm id="guestsForm">
                         {/* Field array for generating multiple guests boxes */}
                         <FieldArray name="guests">
@@ -95,37 +97,36 @@ const GuestInfo = () =>{
                                                         </div>
                                                         {/* Form elements */}
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
-                                                            <div className='col-6 p-0'>
+                                                            <div className='col-5 p-0'>
                                                                 <TextField name={`guests.${index}.firstName`} placeholder='Guest Name'></TextField>
                                                             </div>
-                                                            <div className='col-6 p-0'>
+                                                            <div className='col-5 p-0'>
                                                                 <TextField name={`guests.${index}.lastName`} placeholder='Guest Surname'></TextField>
                                                             </div> 
                                                         </div>
 
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
-                                                            <div className='col-6 p-0'>
+                                                            <div className='col-5 p-0'>
                                                                 <RadioButtonField  name={`guests.${index}.gender`} label={gender}></RadioButtonField>
                                                             </div>
-                                                            <div className='col-6 p-0'>
+                                                            <div className='col-5 p-0'>
                                                                 <DateField name={`guests.${index}.dateOfBirth`} placeholder='Date of birth'></DateField>
                                                             </div> 
                                                         </div>
 
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
-                                                            <div className='col-6 p-0'>
-                                                                <TextField name={`guests.${index}.nationality`} placeholder='Nationality'></TextField>
-                                                                {/* <NationalityField  name="nationality" label="nat"></NationalityField> */}
+                                                            <div className='col-5 p-0'>
+                                                                <NationalityField  name={`guests.${index}.nationality`} label="nat"></NationalityField>
                                                             </div>
-                                                            <div className='col-6 p-0'>
+                                                            <div className='col-5 p-0'>
                                                             </div> 
                                                         </div>
 
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
-                                                            <div className='col-6 p-0'>
+                                                            <div className='col-5  p-0'>
                                                                 <DropdownField name={`guests.${index}.documentType`} data={docType} placeholder="Document type"></DropdownField>
                                                             </div>
-                                                            <div className='col-6 p-0'>
+                                                            <div className='col-5 p-0'>
                                                                 <NumberField name={`guests.${index}.documentNumber`} placeholder='Document number'></NumberField>
                                                             </div> 
                                                         </div>
