@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {FieldArray, Formik, Field, Form as FormikForm} from 'formik'
 import { checkInValidationSchema, guestValidationSchema, submitSchema, guestsValidationSchema } from '@/helpers/form-helpers'
@@ -10,7 +10,12 @@ import { useLocalStorage } from 'react-use'
 import RadioButtonField from './RadioButtonField'
 import NationalityField from './NationalityField'
 import DropdownField from './DropdownField'
+import { db } from '../firebase/clientApps'
+import { collection, addDoc } from 'firebase/firestore'
+import { queryDataHelper } from '@/helpers/data-helper'
 
+
+// http://localhost:3000/guestPage?mainGuestName=Miha+Jan+Strehovec&mainGuestEmail=miha.strehovec23%40gmail.com&numberOfGuests=1&checkInDate=Wed+Mar+15+2023+00%3A00%3A00+GMT%2B0100+%28Central+European+Standard+Time%29&checkOutDate=Sat+Mar+18+2023+00%3A00%3A00+GMT%2B0100+%28Central+European+Standard+Time%29
 
 export interface iGuest {
     firstName?: string
@@ -20,23 +25,21 @@ export interface iGuest {
     nationality?: string
     documentType?: string
     documentNumber?: string
-  }
+}
   
-  export interface iCheckinDetails {
+export interface iCheckinDetails {
     mainGuestName?: string
     mainGuestEmail?: string
     numberOfGuests?: number
-    numberOfPets?: number
     checkInDate?: Date
     checkOutDate?: Date
-    ajpes?: boolean
-  }
+}
   
-  export interface FormValues extends iCheckinDetails {
+export interface FormValues extends iCheckinDetails {
     guests: iGuest[]
-  }
+}
   
-  export const emptyGuest: iGuest = {
+export const emptyGuest: iGuest = {
     firstName: '',
     lastName: '',
     gender: '',
@@ -44,19 +47,45 @@ export interface iGuest {
     nationality: '',
     documentType: '',
     documentNumber: ''
-  }
+}
   
-  export const initialState: FormValues = {
+export let initialState: FormValues = {
     mainGuestName: 'janez',
     mainGuestEmail: 'janez@gmail.com',
     numberOfGuests: 2,
-    numberOfPets: 0,
     checkInDate: new Date(),
     checkOutDate: new Date(),
     guests: [],
+}
+
+
+
+// @ts-ignore
+const onFormSubmitSuccess = (data) => {
+    console.log(db)
+    // Adding a document into the collection
+    addDoc(collection(db, 'knjiga-gostov'), {
+      mainGuestName: data.mainGuestName,
+      mainGuestEmail: data.mainGuestEmail,
+      numberOfGuests: data.numberOfGuests,
+      checkInDate: data.checkInDate,
+      checkOutDate: data.checkOutDate,
+      guests: data.guests,
+      createdAt: new Date()
+    })
+      .then(() => {
+        console.log('Writting to the database successful')
+      })
+      .catch((error) => {
+        console.log('Oh no! Error ahead watch out =>', error)
+      })
   }
 
+
+
 const GuestInfo = () =>{
+
+    // console.log("dolžina", guest.guests.length)
     const router = useRouter()
 
     const [savedFormValues, setSavedFormValues, removeSavedFormValues] = useLocalStorage('checkin-form-values', undefined)
@@ -67,10 +96,16 @@ const GuestInfo = () =>{
         { label: 'Passport', value: 'P' },
         { label: 'Drivers license', value: 'V' }
     ]
+    
+    initialState = queryDataHelper(router.query)
+    let guests =  Array(parseInt(initialState.numberOfGuests)).fill(undefined)
 
-    const numOfGuests = 2
-    let guests = Array(numOfGuests).fill(undefined)
-  
+    const timeDiff = Math.abs(initialState.checkOutDate.getTime() - initialState.checkInDate.getTime())
+
+    const numOfNights =  Math.ceil(timeDiff / (1000 * 3600 * 24));  
+
+    console.log("st nocitev:" , numOfNights)
+    // console.log(initialState.checkInDate)
 
     return (
         <>
@@ -78,6 +113,16 @@ const GuestInfo = () =>{
                 initialValues={initialState}
                 onSubmit={values =>{
                     console.log(values)
+                    onFormSubmitSuccess(values)
+                    router.push({
+                        pathname:"/paymentPage",
+                        query:{
+                            mainGuestName:initialState.mainGuestName,
+                            numOfGuests:initialState.numberOfGuests,
+                            numOfNights:numOfNights,
+                            mainGuestEmail:initialState.mainGuestEmail
+                        }
+                    })
 
                 }}
                 validationSchema={guestsValidationSchema}

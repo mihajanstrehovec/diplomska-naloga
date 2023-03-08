@@ -12,7 +12,7 @@ const CheckInOverview = (checkInData) =>{
                         Check-in overveiw
                     </div>
                     <div className='col-10 margin-0 p-0'>
-                        <CheckInInfo info={checkInData.data.mainGuest} infoTxt="Main guest" email=" miha.strehovec23@gmail.com"/>
+                        <CheckInInfo info={checkInData.data.mainGuest + " "} infoTxt="Main guest" email={checkInData.data.mainGuestEmail}/>
                     </div>
                     <div className='col-10 margin-0 p-0'>
                         <CheckInInfo info={checkInData.data.nights} infoTxt="Nights"/>

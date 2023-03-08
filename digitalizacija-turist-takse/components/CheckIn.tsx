@@ -7,6 +7,7 @@ import NumberField from './NumberField'
 import DateField from './DateField'
 import { Button } from 'primereact/button'
 import { useLocalStorage } from 'react-use'
+import { query } from 'firebase/firestore'
 
 const CheckIn = () =>{
     const router = useRouter()
@@ -32,7 +33,16 @@ const CheckIn = () =>{
                     onSubmit={(values,{ setSubmitting })=>{
                         console.log(values)
                         setSavedFormValues(values)
-                        // router.push('/guestPage')
+                        router.push({
+                            pathname: '/guestPage',
+                            query: {
+                                mainGuestName: values.mainGuestName,
+                                mainGuestEmail: values.mainGuestEmail,
+                                numberOfGuests: values.numberOfGuests,
+                                checkInDate: values.checkInDate.toString(),
+                                checkOutDate: values.checkOutDate.toString()
+                            }
+                        })
                         setSubmitting(false)
                     }}
                     validationSchema={checkInValidationSchema}
@@ -41,7 +51,7 @@ const CheckIn = () =>{
                             
                             <TextField name="mainGuestName" placeholder="Main guest name" className="mb-0 fieldStyle"/>
                             <TextField name="mainGuestEmail" placeholder="Main guest email" className="mb-0 fieldStyle"/>
-                            <NumberField name="numberOfGuests" placeholder="Number of guests" min={1} max={5} prefix="Number of guests" className="mb-0"/>
+                            <NumberField name="numberOfGuests" placeholder="Number of guests" min={0} max={5} prefix="Number of guests " className="mb-0"/>
                             <DateField name="checkInDate" placeholder="Check-in date" minDate={new Date()} className="mb-0 fieldStyle"/>
                             <DateField name="checkOutDate" placeholder="Check-out date" minDate={new Date()} className="mb-0 fieldStyle"/>
                             

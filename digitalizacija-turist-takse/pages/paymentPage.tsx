@@ -4,17 +4,21 @@ import Layout
  from '@/components/Layout'
 import CheckInOverview from '@/components/checkInOverview'
 import PaymentBox from '@/components/paymentBox'
+import { useRouter } from 'next/router'
 
 
 const inter = Inter({ subsets: ['latin'] })
 
 const PaymentPage: NextPage = () => {
 
+    const router = useRouter()
+
     const data ={
-      mainGuest: "Miha Jan Strehovec",
-      nights: 3,
-      guests: 2,
-      tax:9.6
+      mainGuest: router.query.mainGuestName,
+      mainGuestEmail: router.query.mainGuestEmail,
+      nights: router.query.numOfNights,
+      guests: router.query.numOfGuests,
+      tax: Math.floor(parseInt(router.query.numOfGuests)*parseInt(router.query.numOfNights)*1.6)
     }
 
     return(
