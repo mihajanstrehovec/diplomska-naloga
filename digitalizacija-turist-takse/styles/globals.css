@@ -10,6 +10,7 @@ body {
       'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    height: 100vh;
   }
 
 .container{
@@ -140,4 +141,20 @@ input:focus{
 
 .payBttn:focus{
     box-shadow: 0 0 5px #FFB800!important;
+}
+
+
+.table{
+    min-width: 80vw;
+    margin-top: 12vh;
+}
+
+
+th{
+    background: #f4af00!important;
+    color: white!important;
+}
+
+.p-datatable-row-expansion th{
+    background: #ffcb48!important;
 }
