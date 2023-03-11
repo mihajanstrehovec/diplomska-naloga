@@ -9,31 +9,13 @@ import {
   QuerySnapshot,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  addDoc
 } from 'firebase/firestore'
 import dayjs from 'dayjs'
+import { Guest, Checkin} from '@/interfaces/interfaces-db'
 
-export interface Guest {
-  firstName: string
-  lastName: string
-  gender: string
-  dateOfBirth: string
-  nationality: string
-  documentType: string
-  documentNumber: string
-}
 
-export interface Checkin {
-  id: string
-  mainGuestName: string
-  mainGuestEmail: string
-  numberOfGuests: number
-  numberOfPets: number
-  checkInDate: string
-  checkOutDate: string
-  guests: Guest[]
-  ajpes: boolean
-}
 
 const mapGuests = (guests: any[]): Guest[] => {
   return guests.map((guest) => ({
@@ -89,6 +71,29 @@ const useDB = () => {
     await deleteDoc(ref)
   }
 
+  // @ts-ignore
+  const onFormSubmitSuccess = (data) => {
+    console.log(db)
+    // Adding a document into the collection
+    addDoc(collection(db, 'knjiga-gostov'), {
+      mainGuestName: data.mainGuestName,
+      mainGuestEmail: data.mainGuestEmail,
+      numberOfGuests: data.numberOfGuests,
+      checkInDate: data.checkInDate,
+      checkOutDate: data.checkOutDate,
+      guests: data.guests,
+      createdAt: new Date()
+    })
+      .then(() => {
+        console.log('Writting to the database successful')
+      })
+      .catch((error) => {
+        console.log('Oh no! Error ahead watch out =>', error)
+      })
+  }
+
+
+
   useEffect(() => {
     fetchCheckins()
   }, [])
@@ -97,7 +102,8 @@ const useDB = () => {
     checkins,
     deleteCheckin,
     refetch: fetchCheckins,
-    updateCheckin
+    updateCheckin,
+    onFormSubmitSuccess
   }
 }
 

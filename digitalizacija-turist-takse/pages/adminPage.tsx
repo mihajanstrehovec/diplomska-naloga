@@ -1,38 +1,18 @@
-import { Inter } from '@next/font/google'
 import type {NextPage} from 'next'
 import Layout from '@/components/Layout'
-import GuestInfo from '@/components/GuestInfo'
-import { db } from '../firebase/clientApps'
-import {
-  collection,
-  getDocs,
-  orderBy,
-  QuerySnapshot,
-  DocumentData,
-  query,
-} from 'firebase/firestore'
-import { useState, useEffect } from 'react'
-import dayjs from 'dayjs'
-import AdminTable from '@/components/AdminTable'
-import { DataTable, DataTableRowEventParams } from 'primereact/datatable'
+import { useState } from 'react'
+import { DataTable, DataTableRowEvent } from 'primereact/datatable'
 import { Column } from 'primereact/column'
-import { ConfirmDialog } from 'primereact/confirmdialog'
-import AdminLayout from '@/components/AdminLayout'
-import useDB, {Checkin} from '@/hooks/dataBase'
-
-
-const inter = Inter({ subsets: ['latin'] })
+import useDB from '@/hooks/dataBase'
+import { Checkin } from '@/interfaces/interfaces-db'
 
 const AdminPage: NextPage = () => {
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>()
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [deletingCheckin, setDeletingCheckin] = useState<Checkin>()
   const { checkins, deleteCheckin, refetch, updateCheckin } = useDB()
-
-  console.log("checkins", checkins)
   
-
-  const rowToggled = (e: DataTableRowEventParams) => {
+  const rowToggled = (e: DataTableRowEvent ) => {
     setExpandedRows(e.data)
   }
 
@@ -52,22 +32,12 @@ const AdminPage: NextPage = () => {
     )
   }
 
-  const columns = [
-    {field: "mainGuestName", header: "Main guest"},
-    {field: "numberOfGuests", header: "Number of guests"},
-    // {field: "numberOfGuests", header: "Check in date"}
-    // {field: "checkOutDate", header: "Check out date"}
-  ]
-
   return (
-    <Layout>
-      
- 
 
-    
-      <div className="card ">
-        <div className="datatable-rowexpansion-demo">
-          <div className="flex justify-content-center mb-3 ">
+    <Layout>
+      <div className="card mb-6">
+        <div className="datatable-rowexpansion-demo mb-10vh ">
+          <div className="flex justify-content-center ">
             <DataTable
               value={checkins}
               expandedRows={expandedRows}
@@ -77,7 +47,7 @@ const AdminPage: NextPage = () => {
               scrollHeight="flex"
               rowExpansionTemplate={rowExpansionTemplate}
               dataKey="id"
-              className="col-9 shadow-4 table p-0"
+              className="col-9 shadow-4 table p-0 mb-5"
               size="large"
               >
               <Column expander style={{ width: '3em' }} />
@@ -89,10 +59,9 @@ const AdminPage: NextPage = () => {
           </div>
         </div>
       </div>
-    
-    
     </Layout>
   )
+  
 }
 
 export default AdminPage

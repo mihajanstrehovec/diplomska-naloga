@@ -1,18 +1,26 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import {Formik, Field, Form as FormikForm} from 'formik'
+import {Formik, Form as FormikForm} from 'formik'
 import { checkInValidationSchema } from '@/helpers/form-helpers'
 import TextField from './TextField'
 import NumberField from './NumberField'
 import DateField from './DateField'
 import { Button } from 'primereact/button'
-import { useLocalStorage } from 'react-use'
-import { query } from 'firebase/firestore'
+import { checkInInitval } from '@/interfaces/interfaces-fe'
+// import { useLocalStorage } from 'react-use'
 
 const CheckIn = () =>{
     const router = useRouter()
 
-    const [savedFormValues, setSavedFormValues, removeSavedFormValues] = useLocalStorage('checkin-form-values', undefined)
+    // const [savedFormValues, setSavedFormValues, removeSavedFormValues] = useLocalStorage('checkin-form-values', undefined)
+
+    const initVal : checkInInitval =  {
+        mainGuestName: "",
+        mainGuestEmail: "",
+        numberOfGuests: 0,
+        checkInDate: new Date(),
+        checkOutDate: new Date()
+    }
   
 
     return (
@@ -23,16 +31,10 @@ const CheckIn = () =>{
                 </div>
                 <div className='col-6'>
                     <Formik
-                    initialValues={{
-                        mainGuestName: "",
-                        mainGuestEmail: "",
-                        numberOfGuests: 0,
-                        checkInDate: "",
-                        checkOutDate: ""
-                    }}
+                    initialValues={initVal}
                     onSubmit={(values,{ setSubmitting })=>{
                         console.log(values)
-                        setSavedFormValues(values)
+                        // setSavedFormValues(values)
                         router.push({
                             pathname: '/guestPage',
                             query: {
@@ -51,9 +53,9 @@ const CheckIn = () =>{
                             
                             <TextField name="mainGuestName" placeholder="Main guest name" className="mb-0 fieldStyle"/>
                             <TextField name="mainGuestEmail" placeholder="Main guest email" className="mb-0 fieldStyle"/>
-                            <NumberField name="numberOfGuests" placeholder="Number of guests" min={0} max={5} prefix="Number of guests " className="mb-0"/>
-                            <DateField name="checkInDate" placeholder="Check-in date" minDate={new Date()} className="mb-0 fieldStyle"/>
-                            <DateField name="checkOutDate" placeholder="Check-out date" minDate={new Date()} className="mb-0 fieldStyle"/>
+                            <NumberField name="numberOfGuests" placeholder="Number of guests" min={0} max={5} prefix="Number of guests "/>
+                            <DateField name="checkInDate" placeholder="Check-in date" minDate={new Date()} />
+                            <DateField name="checkOutDate" placeholder="Check-out date" minDate={new Date()} />
                             
                         </FormikForm>
                         

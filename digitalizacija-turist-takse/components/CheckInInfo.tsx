@@ -2,8 +2,8 @@ import React from 'react'
 import { Divider } from 'primereact/divider';
 
 const CheckInInfo = ({info, infoTxt, email, divider=true}: {
-        info: string,
-        infoTxt: string,
+        info?: string,
+        infoTxt?: string,
         email?:string,
         divider?:Boolean
     }) => {

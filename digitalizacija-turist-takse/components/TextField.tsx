@@ -9,7 +9,6 @@ const TextField = ({
     tooltip,
     className="fieldStyle"}: {
         name: string,
-        label?: string,
         placeholder?: string,
         type?: string,
         tooltip?: string,

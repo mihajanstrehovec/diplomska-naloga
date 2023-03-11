@@ -1,9 +1,9 @@
 import React from 'react'
 import CheckInInfo from './CheckInInfo'
+import { paymentData } from '@/interfaces/interfaces-fe'
+//@ts-ignore
+const CheckInOverview = (data : paymentData) =>{
 
-
-const CheckInOverview = (checkInData) =>{
-    console.log(checkInData.data)
     return (
         <>
             <div className = "card flex flex-wrap align-items-center justify-content-center p-0 container">
@@ -12,13 +12,13 @@ const CheckInOverview = (checkInData) =>{
                         Check-in overveiw
                     </div>
                     <div className='col-10 margin-0 p-0'>
-                        <CheckInInfo info={checkInData.data.mainGuest + " "} infoTxt="Main guest" email={checkInData.data.mainGuestEmail}/>
+                        <CheckInInfo info={data.mainGuest + " "} infoTxt="Main guest" email={data.mainGuestEmail + ""}/>
                     </div>
                     <div className='col-10 margin-0 p-0'>
-                        <CheckInInfo info={checkInData.data.nights} infoTxt="Nights"/>
+                        <CheckInInfo info={data.nights + ""} infoTxt="Nights"/>
                     </div>
                     <div className='col-10 margin-0 p-0'>
-                        <CheckInInfo info={checkInData.data.guests} infoTxt="Guests"/>
+                        <CheckInInfo info={data.guests + ""} infoTxt="Guests"/>
                     </div>
                 </div>
             </div>

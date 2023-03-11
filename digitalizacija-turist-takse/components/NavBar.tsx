@@ -6,7 +6,7 @@ const NavBar = () => {
     const pageNames = {"/" : "Check in","/guestPage" : "Guests", "/paymentPage" : "Payment", "/adminPage" : "Admin"}
     return(
         <div className = "sticky flex align-items-center justify-content-center top-0 navbar">
-            {pageNames[router.asPath]}
+            {pageNames[router.asPath as keyof typeof pageNames]}
         </div>
     )
     

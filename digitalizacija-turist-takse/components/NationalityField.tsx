@@ -3,7 +3,7 @@ import { AutoComplete } from 'primereact/autocomplete'
 import { CountryService, iCountry } from 'service/CountryService'
 import { useField } from 'formik'
 
-const NationalityField = ({ label, name }: { label: string; name: string }) => {
+const NationalityField = ({ name }: { name: string }) => {
   const [countries, setCountries] = useState<iCountry[]>([])
   const [selectedCountry, setSelectedCountry] = useState<iCountry>()
   const [filteredCountries, setFilteredCountries] = useState<iCountry[]>([])

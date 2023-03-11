@@ -4,11 +4,9 @@ import { useField } from 'formik'
 
 const NumberField = ({
     name,
-    label,
     placeholder,
     min = -Infinity,
     max = Infinity,
-    className,
     prefix
   }: {
     name: string
@@ -16,7 +14,6 @@ const NumberField = ({
     placeholder?: string
     min?: number
     max?: number
-    className?: string
     prefix?: string
   }) => {
     const [field, meta, helpers] = useField(name)
