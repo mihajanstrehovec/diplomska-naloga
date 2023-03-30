@@ -20,6 +20,12 @@ body {
     min-height: 90vh;
 }
 
+.container-payment{
+    max-width: 1480px;
+    
+   
+}
+
 .main {
     
     padding: 4rem 0;
@@ -38,6 +44,14 @@ body {
     max-width: 7vw;
   
 }
+
+@media all and (min-width:0px) and (max-width: 568px) {
+    .navbar{
+        visibility: hidden!important;
+        min-height: 5vh!important;
+        width: 0px;
+    }
+  }
 
 .cardTitle{
     max-height: 10vh;
@@ -131,7 +145,7 @@ input:focus{
 }
 
 #email{
-    opacity: 0.7;
+    opacity: 0.5;
 }
 
 .payBttn{
@@ -157,4 +171,19 @@ th{
 
 .p-datatable-row-expansion th{
     background: #ffcb48!important;
+}
+
+
+#success{
+    color: #ffcb48!important;
+    font-weight: 500;
+}
+
+.delToast .p-toast-message-content{
+    background-color: #ffcb48!important;
+    color: white!important;
+}
+
+.delToast .p-button-warning{
+    background-color: #EF4444!important;
 }

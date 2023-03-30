@@ -2,8 +2,8 @@ import React from 'react'
 import { Divider } from 'primereact/divider';
 
 const CheckInInfo = ({info, infoTxt, email, divider=true}: {
-        info: string,
-        infoTxt: string,
+        info?: string,
+        infoTxt?: string,
         email?:string,
         divider?:Boolean
     }) => {
@@ -18,8 +18,11 @@ const CheckInInfo = ({info, infoTxt, email, divider=true}: {
                 </div>
                 <div className='col-6 checkinfo text-right '>
                     {info}
-                    <small id="email">{ email}</small>
+                    {/* <small id="email">{ email}</small> */}
                 </div>
+                {email !== undefined && 
+                    <small className='col-12 text-right' id="email">{ email}</small>
+                }
                 {divide==true && <Divider className='mb-0'/>}
                 
             </div>

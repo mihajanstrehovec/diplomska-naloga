@@ -9,31 +9,13 @@ import {
   QuerySnapshot,
   doc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  addDoc
 } from 'firebase/firestore'
 import dayjs from 'dayjs'
+import { Guest, Checkin} from '@/interfaces/interfaces-db'
 
-export interface Guest {
-  firstName: string
-  lastName: string
-  gender: string
-  dateOfBirth: string
-  nationality: string
-  documentType: string
-  documentNumber: string
-}
 
-export interface Checkin {
-  id: string
-  mainGuestName: string
-  mainGuestEmail: string
-  numberOfGuests: number
-  numberOfPets: number
-  checkInDate: string
-  checkOutDate: string
-  guests: Guest[]
-  ajpes: boolean
-}
 
 const mapGuests = (guests: any[]): Guest[] => {
   return guests.map((guest) => ({
@@ -58,7 +40,6 @@ const mapCheckins = (firestoreData: QuerySnapshot<DocumentData>): Checkin[] => {
       mainGuestName: checkin.mainGuestName,
       mainGuestEmail: checkin.mainGuestEmail,
       numberOfGuests: checkin.numberOfGuests,
-      numberOfPets: checkin.numberOfPets,
       checkInDate:  dayjs(checkin.checkInDate.toDate()).format('DD. MM. YYYY'),
       checkOutDate: dayjs(checkin.checkOutDate.toDate()).format('DD. MM. YYYY'),
       guests: mapGuests(checkin.guests),
@@ -78,16 +59,37 @@ const useDB = () => {
   }
 
   const updateCheckin = async (checkinID: string) => {
-    const checkinRef = doc(db, "check-in-details", checkinID)
+    const checkinRef = doc(db, "knjiga-gostov", checkinID)
     await updateDoc(checkinRef, {
       ajpes: true
     })
   }
 
   const deleteCheckin = async (checkin: Checkin) => {
-    const ref = doc(db, 'check-in-details', checkin.id)
+    const ref = doc(db, 'knjiga-gostov', checkin.id)
     await deleteDoc(ref)
   }
+
+  // @ts-ignore
+  const onFormSubmitSuccess = (data) => {
+    // Adding a document into the collection
+    addDoc(collection(db, 'knjiga-gostov'), {
+      mainGuestName: data.mainGuestName,
+      mainGuestEmail: data.mainGuestEmail,
+      numberOfGuests: data.numberOfGuests,
+      checkInDate: data.checkInDate,
+      checkOutDate: data.checkOutDate,
+      guests: data.guests,
+      ajpes: false,
+      createdAt: new Date()
+    })
+      .then(() => {
+      })
+      .catch((error) => {
+      })
+  }
+
+
 
   useEffect(() => {
     fetchCheckins()
@@ -97,7 +99,8 @@ const useDB = () => {
     checkins,
     deleteCheckin,
     refetch: fetchCheckins,
-    updateCheckin
+    updateCheckin,
+    onFormSubmitSuccess
   }
 }
 

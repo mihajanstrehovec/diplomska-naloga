@@ -4,18 +4,15 @@ import { useField } from 'formik'
 
 const DateField = ({
   name,
-  label,
   placeholder,
   minDate,
   maxDate,
-  className
 }: {
   name: string
   label?: string
   placeholder?: string
   minDate?: Date
   maxDate?: Date
-  className?: string
 }) => {
   const [field, meta] = useField(name)
   return (

@@ -5,9 +5,6 @@ import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
 import 'styles/flags.css'
 
-
-
-
 import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {
