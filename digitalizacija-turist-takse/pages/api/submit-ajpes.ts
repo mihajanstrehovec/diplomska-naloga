@@ -12,6 +12,7 @@ dayjs.extend(customParseFormat)
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const reservation = req.body['requestBody']
+  console.log(reservation)
 
   // credentials
   const username: string = 'apiTest'
