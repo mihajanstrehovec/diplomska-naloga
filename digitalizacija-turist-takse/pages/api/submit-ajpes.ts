@@ -95,7 +95,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // agent that carries certificate needed for AJPES
   const agent = new https.Agent({
-    pfx: fs.readFileSync(process.cwd() + '\\pages\\api\\AjpesTest.pfx'),
+    pfx: fs.readFileSync(process.cwd() + '/pages/api/AjpesTest.pfx'),
     rejectUnauthorized: false,
     passphrase: 'ajpestest',
     keepAlive: true
