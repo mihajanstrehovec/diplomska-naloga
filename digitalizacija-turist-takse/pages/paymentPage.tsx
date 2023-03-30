@@ -1,6 +1,5 @@
 import type {NextPage} from 'next'
-import Layout
-from '@/components/Layout'
+import Layout from '@/components/Layout'
 import CheckInOverview from '@/components/checkInOverview'
 import PaymentBox from '@/components/paymentBox'
 import { useRouter } from 'next/router'

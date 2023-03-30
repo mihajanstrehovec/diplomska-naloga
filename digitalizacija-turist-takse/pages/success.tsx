@@ -1,5 +1,4 @@
 import type {NextPage} from 'next'
-import CheckIn from 'components/CheckIn'
 import Layout from '@/components/Layout'
 import { useRouter } from 'next/router'
 
