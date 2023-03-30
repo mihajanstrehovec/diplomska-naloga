@@ -2,7 +2,7 @@ import type {NextPage} from 'next'
 import Layout
 from '@/components/Layout'
 import CheckInOverview from '@/components/checkInOverview'
-import PaymentBox from '@/components/PaymentBox'
+import PaymentBox from '@/components/paymentBox'
 import { useRouter } from 'next/router'
 import { paymentData } from '@/interfaces/interfaces-fe'
 
