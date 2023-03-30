@@ -134,24 +134,25 @@ const AdminPage: NextPage = () => {
         body: JSON.stringify({ requestBody })
       })
         .then(async (response) => {
-          const res = await response.json()
-          if(response.status == 200){
-            if (res["@failure"] == 0){
-              submitReport("success", 
-              "Information sent successfully",
-              `Successfully sent all ${res["@success"]} guests information to AJPES`)
-              await updateCheckin(requestBody.id)
-              await refetch()
-            } else {
-              submitReport("error", 
-              "Error while sending information",  
-              `Something went wrong while sending the data to AJPES, please contact our support team. Error message: \n ${res["row"][0]["@msgTxt"]}`)
-            }
-          } else {
-            submitReport("error",
-            "Error while sending information",
-            `Something went wrong while sending the data to AJPES, please contact our support team or try again later.`)
-          }
+          console.log("res:", response)
+          // const res = await response.json()
+          // if(response.status == 200){
+          //   if (res["@failure"] == 0){
+          //     submitReport("success", 
+          //     "Information sent successfully",
+          //     `Successfully sent all ${res["@success"]} guests information to AJPES`)
+          //     await updateCheckin(requestBody.id)
+          //     await refetch()
+          //   } else {
+          //     submitReport("error", 
+          //     "Error while sending information",  
+          //     `Something went wrong while sending the data to AJPES, please contact our support team. Error message: \n ${res["row"][0]["@msgTxt"]}`)
+          //   }
+          // } else {
+          //   submitReport("error",
+          //   "Error while sending information",
+          //   `Something went wrong while sending the data to AJPES, please contact our support team or try again later.`)
+          // }
         })
         .catch((e) => reject(e))
     })
