@@ -64,9 +64,8 @@ export interface Guest {
     mainGuestName: string
     mainGuestEmail: string
     numberOfGuests: number
-    numberOfPets: number
     checkInDate: string
     checkOutDate: string
-    guests: Guest[]
+    guests: Guest[],
     ajpes: boolean
   }

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
-import {FieldArray, Formik, Field, Form as FormikForm} from 'formik'
-import { checkInValidationSchema, guestValidationSchema, submitSchema, guestsValidationSchema } from '@/helpers/form-helpers'
+import {FieldArray, Formik, Form as FormikForm} from 'formik'
+import { guestsValidationSchema } from '@/helpers/form-helpers'
 import TextField from './TextField'
 import NumberField from './NumberField'
 import DateField from './DateField'
@@ -15,12 +15,10 @@ import { iGuest, FormValues} from '@/interfaces/interfaces-fe'
 import useDB from '@/hooks/dataBase'
 import Link from 'next/link'
 
-// http://localhost:3000/guestPage?mainGuestName=Miha+Jan+Strehovec&mainGuestEmail=miha.strehovec23%40gmail.com&numberOfGuests=1&checkInDate=Wed+Mar+15+2023+00%3A00%3A00+GMT%2B0100+%28Central+European+Standard+Time%29&checkOutDate=Sat+Mar+18+2023+00%3A00%3A00+GMT%2B0100+%28Central+European+Standard+Time%29
-
 export let initialState: FormValues = {
-    mainGuestName: 'janez',
-    mainGuestEmail: 'janez@gmail.com',
-    numberOfGuests: 2,
+    mainGuestName: '',
+    mainGuestEmail: '',
+    numberOfGuests: 0,
     checkInDate: new Date(),
     checkOutDate: new Date(),
     guests: [],
@@ -41,11 +39,8 @@ const GuestInfo = () =>{
     ]
     
     initialState = queryDataHelper(router.query)
-    console.log("num of Guests", initialState.numberOfGuests)
     //@ts-ignore
     let guests = Array(parseInt(initialState.numberOfGuests)).fill(undefined)
-
-    console.log("init Guzes", initialState.guests)
 
     const timeDiff = Math.abs((initialState.checkOutDate || new Date()).getTime() - (initialState.checkInDate || new Date()).getTime())
 
@@ -56,15 +51,38 @@ const GuestInfo = () =>{
             <Formik
                 initialValues={initialState}
                 onSubmit={values =>{
-                    console.log(values)
+                    let none = 0
+                    let half = 0
+                    let full = 0
                     useDBinst.onFormSubmitSuccess(values)
+                    var today = new Date()
+                    values.guests.map( guest=> {
+                        var birth = guest.dateOfBirth || new Date()
+                        var age = today.getFullYear() - birth?.getFullYear()
+                        var m = today.getMonth() - birth?.getMonth()
+                        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+                            age--;
+                        }
+                        if (age < 8 || age > 65){
+                            none ++
+                        } else if (age < 18){
+                            half++
+                        } else {
+                            full ++
+                        } 
+                    })
+                    
                     router.push({
                         pathname:"/paymentPage",
                         query:{
                             mainGuestName:initialState.mainGuestName,
                             numOfGuests:initialState.numberOfGuests,
                             numOfNights:numOfNights,
-                            mainGuestEmail:initialState.mainGuestEmail
+                            mainGuestEmail:initialState.mainGuestEmail,
+                            none: none,
+                            half: half,
+                            full: full,
+
                         }
                     })
 
@@ -79,43 +97,43 @@ const GuestInfo = () =>{
                                     {guests.length > 0 &&
                                         guests.map((guest: iGuest, index: number) => (
                                             <div key={index}>
-                                                <div className = "card flex flex-wrap align-items-center justify-content-center container">
-                                                    <div className='flex flex-wrap card-container col-6 justify-content-center checkIn pb-5'>
-                                                        <div className='flex col-12 cardTitle'>
+                                                <div className = "card flex flex-wrap align-items-center justify-content-center container ">
+                                                    <div className='z-5 flex flex-wrap card-container md:col-6 justify-content-center checkIn pb-5'>
+                                                        <div className='flex col-12 cardTitle md:pl-4 md:pt-3 pl-3 pt-3'>
                                                             Guest {index+1}
                                                         </div>
                                                         {/* Form elements */}
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
-                                                            <div className='col-5 p-0'>
+                                                            <div className='md:col-5 col-12 p-0'>
                                                                 <TextField name={`guests.${index}.firstName`} placeholder='Guest Name'></TextField>
                                                             </div>
-                                                            <div className='col-5 p-0'>
+                                                            <div className='md:col-5 col-12 p-0'>
                                                                 <TextField name={`guests.${index}.lastName`} placeholder='Guest Surname'></TextField>
                                                             </div> 
                                                         </div>
 
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
-                                                            <div className='col-5 p-0'>
+                                                            <div className='md:col-5 col-12 p-0'>
                                                                 <RadioButtonField  name={`guests.${index}.gender`} label={gender}></RadioButtonField>
                                                             </div>
-                                                            <div className='col-5 p-0'>
+                                                            <div className='md:col-5 col-12 p-0'>
                                                                 <DateField name={`guests.${index}.dateOfBirth`} placeholder='Date of birth'></DateField>
                                                             </div> 
                                                         </div>
 
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
-                                                            <div className='col-5 p-0'>
+                                                            <div className='md:col-5 col-12 p-0'>
                                                                 <NationalityField  name={`guests.${index}.nationality`} ></NationalityField>
                                                             </div>
-                                                            <div className='col-5 p-0'>
+                                                            <div className='md:col-5 col-12 p-0'>
                                                             </div> 
                                                         </div>
 
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
-                                                            <div className='col-5  p-0'>
+                                                            <div className='md:col-5 col-12  p-0'>
                                                                 <DropdownField name={`guests.${index}.documentType`} data={docType} placeholder="Document type"></DropdownField>
                                                             </div>
-                                                            <div className='col-5 p-0'>
+                                                            <div className='md:col-5 col-12 p-0'>
                                                                 <NumberField name={`guests.${index}.documentNumber`} placeholder='Document number'></NumberField>
                                                             </div> 
                                                         </div>
@@ -131,11 +149,11 @@ const GuestInfo = () =>{
                     </FormikForm>
             </Formik>
             {router.query.numberOfGuests ? (
-            <div className='sticky flex flex-wrap col-12  rigth-0' style={{position: "absolute", bottom: 0, right: 0}}>
-                <div className='sticky flex col-12 right-0 top-0'>
-                    <Button icon="pi pi-check" className="continue-btn p-button-rounded left-0 sticky" form="guestsForm" type='submit' />
+            <div className='z-0 sticky flex flex-wrap col-12 md:rigth-0 md:bottom-0 ' >
+                <div className=' z-0 sticky flex col-12 justify-content-center'>
+                    <Button icon="z-0 pi pi-check" className="continue-btn p-button-rounded md:left-0 sticky" form="guestsForm" type='submit' />
                 </div>
-                <small  className="flex align-items-center justify-content-center col-1 light-txt">
+                <small  className="z-0 flex align-items-center justify-content-center col-12 light-txt">
                     Proceed to tourist tax payment
                 </small>
             </div>) :(

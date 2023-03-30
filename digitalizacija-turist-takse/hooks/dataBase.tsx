@@ -40,7 +40,6 @@ const mapCheckins = (firestoreData: QuerySnapshot<DocumentData>): Checkin[] => {
       mainGuestName: checkin.mainGuestName,
       mainGuestEmail: checkin.mainGuestEmail,
       numberOfGuests: checkin.numberOfGuests,
-      numberOfPets: checkin.numberOfPets,
       checkInDate:  dayjs(checkin.checkInDate.toDate()).format('DD. MM. YYYY'),
       checkOutDate: dayjs(checkin.checkOutDate.toDate()).format('DD. MM. YYYY'),
       guests: mapGuests(checkin.guests),
@@ -60,20 +59,19 @@ const useDB = () => {
   }
 
   const updateCheckin = async (checkinID: string) => {
-    const checkinRef = doc(db, "check-in-details", checkinID)
+    const checkinRef = doc(db, "knjiga-gostov", checkinID)
     await updateDoc(checkinRef, {
       ajpes: true
     })
   }
 
   const deleteCheckin = async (checkin: Checkin) => {
-    const ref = doc(db, 'check-in-details', checkin.id)
+    const ref = doc(db, 'knjiga-gostov', checkin.id)
     await deleteDoc(ref)
   }
 
   // @ts-ignore
   const onFormSubmitSuccess = (data) => {
-    console.log(db)
     // Adding a document into the collection
     addDoc(collection(db, 'knjiga-gostov'), {
       mainGuestName: data.mainGuestName,
@@ -82,13 +80,12 @@ const useDB = () => {
       checkInDate: data.checkInDate,
       checkOutDate: data.checkOutDate,
       guests: data.guests,
+      ajpes: false,
       createdAt: new Date()
     })
       .then(() => {
-        console.log('Writting to the database successful')
       })
       .catch((error) => {
-        console.log('Oh no! Error ahead watch out =>', error)
       })
   }
 

@@ -6,8 +6,8 @@ const CheckInOverview = (data : paymentData) =>{
 
     return (
         <>
-            <div className = "card flex flex-wrap align-items-center justify-content-center p-0 container">
-                <div className='flex flex-wrap card-container col-9 justify-content-center checkIn  pb-5'>
+            <div className = "card flex flex-wrap align-items-center justify-content-center p-0 container-payment md:mt-8 md:mb-8  ">
+                <div className='flex flex-wrap card-container col-9 justify-content-center checkIn  md:mt-8  pb-5'>
                     <div className='flex col-12 cardTitle '>
                         Check-in overveiw
                     </div>

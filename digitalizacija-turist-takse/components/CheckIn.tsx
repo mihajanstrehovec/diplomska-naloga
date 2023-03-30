@@ -25,15 +25,14 @@ const CheckIn = () =>{
 
     return (
         <div className = "card flex flex-wrap align-items-center justify-content-center container">
-            <div className='flex flex-wrap card-container col-6 justify-content-center checkIn pb-5'>
-                <div className='flex col-12 cardTitle'>
+            <div className='flex flex-wrap card-container sm:col-12 md:col-6 xl:col-6 justify-content-center checkIn pb-5'>
+                <div className='flex col-12 cardTitle md:pl-4 md:pt-3 pl-3 pt-3'>
                     Check-in
                 </div>
-                <div className='col-6'>
+                <div className='md:col-6'>
                     <Formik
                     initialValues={initVal}
                     onSubmit={(values,{ setSubmitting })=>{
-                        console.log(values)
                         // setSavedFormValues(values)
                         router.push({
                             pathname: '/guestPage',

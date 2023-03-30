@@ -43,6 +43,9 @@ export interface paymentData {
     mainGuestEmail: string | string[] | undefined,
     nights: string | string[] | undefined,
     guests: string | string[] | undefined,
-    tax: number
+    tax: number,
+    none: string | string[] | undefined,
+    half: string | string[] | undefined,
+    full: string | string[] | undefined
 }
 
