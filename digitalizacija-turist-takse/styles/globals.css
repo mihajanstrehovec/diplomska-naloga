@@ -175,7 +175,7 @@ th{
 
 
 #success{
-    color: #ffcb48!important;
+    color: white!important;
     font-weight: 500;
 }
 
@@ -186,4 +186,8 @@ th{
 
 .delToast .p-button-warning{
     background-color: #EF4444!important;
+}
+
+body:has(h1#success){
+    background-color: #ffcb48;
 }

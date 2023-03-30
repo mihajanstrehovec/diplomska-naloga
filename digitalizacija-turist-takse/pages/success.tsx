@@ -2,6 +2,7 @@ import type {NextPage} from 'next'
 import Layout from '@/components/Layout'
 import { useRouter } from 'next/router'
 
+
 const Success: NextPage = () => {
 
   const router = useRouter()
