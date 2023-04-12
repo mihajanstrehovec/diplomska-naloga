@@ -2,7 +2,7 @@
 export const prices = {
     tax: {
       adults: 1.6,
-      children: 0.6
+      children: 0.8
     }
   }
   

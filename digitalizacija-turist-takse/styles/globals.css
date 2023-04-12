@@ -191,3 +191,7 @@ th{
 body:has(h1#success){
     background-color: #ffcb48;
 }
+
+input::placeholder{
+    color: rgba(0, 0, 0, 0.763);
+}

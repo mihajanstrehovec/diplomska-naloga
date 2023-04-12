@@ -39,13 +39,13 @@ export const emptyGuest: iGuest = {
 }
 
 export interface paymentData {
-    mainGuest: string | string[] | undefined,
-    mainGuestEmail: string | string[] | undefined,
-    nights: string | string[] | undefined,
-    guests: string | string[] | undefined,
+    mainGuest: string ,
+    mainGuestEmail: string,
+    nights: string,
+    guests: string,
     tax: number,
-    none: string | string[] | undefined,
-    half: string | string[] | undefined,
-    full: string | string[] | undefined
+    none: string,
+    numOfChildren: string,
+    numOfAdults: string
 }
 

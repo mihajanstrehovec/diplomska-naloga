@@ -4,23 +4,35 @@ import CheckInOverview from '@/components/checkInOverview'
 import PaymentBox from '@/components/paymentBox'
 import { useRouter } from 'next/router'
 import { paymentData } from '@/interfaces/interfaces-fe'
+import { calculateTotal } from '@/helpers/payment-helper'
 
 const PaymentPage: NextPage = () => {
-
+  
     const router = useRouter()
+
+    const {
+      mainGuestName = '',
+      mainGuestEmail = '',
+      numOfNights = '',
+      numOfGuests = '',
+      none = '',
+      numOfChildren = '',
+      numOfAdults = '',
+    } = router.query
+
     
     const data : paymentData = {
-      mainGuest: router.query.mainGuestName || "",
-      mainGuestEmail: router.query.mainGuestEmail || "",
-      nights: router.query.numOfNights || "",
-      guests: router.query.numOfGuests || "",
-      none: router.query.none || "",
-      half: router.query.half || "",
-      full: router.query.full || "",
-      //@ts-ignore
-      tax: Math.floor(parseInt(router.query.full)*parseInt(router.query.numOfNights)*1.6 + parseInt(router.query.half)*parseInt(router.query.numOfNights)*0.8)
+      mainGuest: mainGuestName as string,
+      mainGuestEmail: mainGuestEmail as string,
+      nights: numOfNights as string,
+      guests: numOfGuests as string,
+      none: none as string,
+      numOfChildren: numOfChildren as string,
+      numOfAdults: numOfAdults as string,
+      tax: 0
     }
 
+    data.tax = calculateTotal(data)
 
     return(
 

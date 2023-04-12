@@ -80,8 +80,8 @@ const GuestInfo = () =>{
                             numOfNights:numOfNights,
                             mainGuestEmail:initialState.mainGuestEmail,
                             none: none,
-                            half: half,
-                            full: full,
+                            numOfChildren: half,
+                            numOfAdults: full,
 
                         }
                     })

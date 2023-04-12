@@ -3,18 +3,36 @@ import CheckInInfo from './CheckInInfo'
 import {Button} from 'primereact/button'
 import { paymentData } from '@/interfaces/interfaces-fe'
 import Prices from './Prices'
+import { calculateTotalAdultTax } from '@/helpers/payment-helper'
 
 // 4000007050000006
 // any 3 number CV
 // Date in the future
 
+// Legitimizacija podatkov
+// Slika mejla 
+// Celotna slika!! 
+// PIN koda na mejl po opravi plačevanja 
+// Integracija z https://www.ringolock.com/how-does-ringo-work/
+// Pravni vidik!!
+// UI, kakšen mejl (catchy!! kot letalski emjli za cactchin)
+// Save information 
+// kako zgleda kjučavnica 
+// Booking 1.0, 2.0 (locker), 3.0 (no host needed)
+// Opiši problem 
+// Čimveč slik!!
+// code integration with stripe (chat gpt )
+// brisanje iz AJPESA
+
+// Osebnih podatkov oz. dokumentov ni dovoljeno fotografirati ali fotokopirati (zlasti ne hranite
+// skeniranih osebnih izkaznic ali potnih listin oz. drugih identifikacijskih dokumentov).
+
 
 const PaymentBox = (checkInData : paymentData) =>{
 
-    //@ts-ignore
-    const adultTax = Math.round((parseInt(checkInData.full)*parseInt(checkInData.nights)*1.6)*100) /100
-    //@ts-ignore
-    const childrenTax = Math.round((parseInt(checkInData.half)*parseInt(checkInData.nights)*0.8)*100) / 100
+
+    const adultTax = calculateTotalAdultTax(parseInt(checkInData.nights), parseInt(checkInData.numOfAdults))
+    const childrenTax = calculateTotalAdultTax(parseInt(checkInData.nights), parseInt(checkInData.numOfChildren))
     const tax = adultTax + childrenTax
 
     
@@ -26,11 +44,11 @@ const PaymentBox = (checkInData : paymentData) =>{
                         Payment
                     </div>
                     <div className='col-10 p-0'>
-                        <Prices total={adultTax.toString() + "€"} age="Adult tourist tax" guests={checkInData.full} amount='1.6' nights={checkInData.nights} />
+                        <Prices total={adultTax.toString() + "€"} age="Adult tourist tax" guests={checkInData.numOfAdults} amount='1.6' nights={checkInData.nights} />
                     </div>
                     <div className='col-10 p-0'>
                         {childrenTax !== 0 && 
-                            <Prices total={childrenTax.toString() + "€"} age="Underage / senior tourist tax" guests={checkInData.half} amount='0.8' nights={checkInData.nights}/>
+                            <Prices total={childrenTax.toString() + "€"} age="Underage / senior tourist tax" guests={checkInData.numOfChildren} amount='0.8' nights={checkInData.nights}/>
                         } 
                     </div>
                     <div className='col-10 p-0'>
@@ -46,8 +64,8 @@ const PaymentBox = (checkInData : paymentData) =>{
                         <input type="hidden" value={checkInData.mainGuest} name="customerName" />
                         <input type="hidden" value={checkInData.mainGuestEmail} name="customerEmail" />
                         <input type="hidden" value={checkInData.nights} name="numberOfNights" />
-                        <input type="hidden" value={checkInData.half} name="numberOfChildren" />
-                        <input type="hidden" value={checkInData.full} name="numberOfAdults" />
+                        <input type="hidden" value={checkInData.numOfChildren} name="numberOfChildren" />
+                        <input type="hidden" value={checkInData.numOfAdults} name="numberOfAdults" />
                         <Button
                         type="submit"
                         role="link"
