@@ -54,7 +54,7 @@ const GuestInfo = () =>{
         const storedData = sessionStorage.getItem("formData")
         if(storedData != ""){
             
-            let dataJSON = JSON.parse(storedData)
+            let dataJSON = JSON.parse(storedData as string)
             console.log("STORED DATA",dataJSON)
             //@ts-ignore
             dataJSON.guests.forEach(guest => {
