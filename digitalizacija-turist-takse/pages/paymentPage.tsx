@@ -49,15 +49,9 @@ const PaymentPage: NextPage = () => {
     console.log("DATA TAX", data.tax)
 
     useEffect(() => {
-      sessionStorage.setItem("formData", JSON.stringify(formData))
-      console.log("FORM DATA: ", formData)
-      
-
-
-      var today = new Date()
-      
-      
-      
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.setItem("formData", JSON.stringify(formData))
+      } 
 
     }, [])
     

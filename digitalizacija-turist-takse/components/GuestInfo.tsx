@@ -51,27 +51,32 @@ const GuestInfo = () =>{
     // const numOfNights =  Math.ceil(Math.abs((formData.checkOutDate || new Date()).getTime() - (formData.checkInDate || new Date()).getTime()) / (1000 * 3600 * 24));  
 
     const checkForData = () => {
-        const storedData = sessionStorage.getItem("formData")
-        if(storedData != ""){
-            
-            let dataJSON = JSON.parse(storedData as string)
-            console.log("STORED DATA",dataJSON)
-            //@ts-ignore
-            dataJSON.guests.forEach(guest => {
-                guest.dateOfBirth = new Date(guest.dateOfBirth) 
-                guest.documentNumber = parseInt(guest.documentNumber)
-            });
-            dataJSON.checkInDate = new Date (dataJSON.checkInDate)
-            dataJSON.checkOutDate = new Date (dataJSON.checkOutDate)
 
-            initialState=dataJSON
-        } else {
+        if (typeof sessionStorage !== 'undefined') {
+            const storedData = sessionStorage.getItem("formData")
+            if(storedData != ""){
+                
+                let dataJSON = JSON.parse(storedData as string)
+                console.log("STORED DATA",dataJSON)
+                //@ts-ignore
+                dataJSON.guests.forEach(guest => {
+                    guest.dateOfBirth = new Date(guest.dateOfBirth) 
+                    guest.documentNumber = parseInt(guest.documentNumber)
+                });
+                dataJSON.checkInDate = new Date (dataJSON.checkInDate)
+                dataJSON.checkOutDate = new Date (dataJSON.checkOutDate)
+
+                initialState=dataJSON
+            } else {
+                initialState = formData
+            }
+            console.log(initialState)
+            return initialState
+            } else {
             initialState = formData
+            return initialState
+          }  
         }
-        console.log(initialState)
-        return initialState
-        
-    }
     
 
     return (

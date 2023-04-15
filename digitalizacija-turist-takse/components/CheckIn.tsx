@@ -56,7 +56,7 @@ const CheckIn = () => {
                 checkOutDate: new Date(checkOutDate as string)
             })
         }
-        sessionStorage.setItem("formData", "")
+      
 
         
 
