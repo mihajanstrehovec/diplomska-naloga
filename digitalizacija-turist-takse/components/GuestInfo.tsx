@@ -56,7 +56,7 @@ const GuestInfo = () =>{
 
         if (typeof sessionStorage !== 'undefined') {
             const storedData = sessionStorage.getItem("formData")
-            if(storedData != ""){
+            if(storedData){
                 
                 let dataJSON = JSON.parse(storedData as string)
                 console.log("STORED DATA",dataJSON)
