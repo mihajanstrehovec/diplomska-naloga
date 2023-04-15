@@ -3,7 +3,7 @@ import CheckInInfo from './CheckInInfo'
 import {Button} from 'primereact/button'
 import { paymentData } from '@/interfaces/interfaces-fe'
 import Prices from './Prices'
-import { calculateTotalAdultTax } from '@/helpers/payment-helper'
+import { calculateTotalAdultTax, calculateTotalChildrenTax } from '@/helpers/payment-helper'
 
 // 4000007050000006
 // any 3 number CV
@@ -32,7 +32,7 @@ const PaymentBox = (checkInData : paymentData) =>{
 
 
     const adultTax = calculateTotalAdultTax(parseInt(checkInData.nights), parseInt(checkInData.numOfAdults))
-    const childrenTax = calculateTotalAdultTax(parseInt(checkInData.nights), parseInt(checkInData.numOfChildren))
+    const childrenTax = calculateTotalChildrenTax(parseInt(checkInData.nights), parseInt(checkInData.numOfChildren))
     const tax = adultTax + childrenTax
 
     
@@ -60,21 +60,21 @@ const PaymentBox = (checkInData : paymentData) =>{
                         <CheckInInfo info={tax  + "€"} infoTxt="TOTAL" divider={false}/>
                     </div>
                     <div className='flex col-10  justify-content-center'>
-                    <form action="/api/checkout_session" method="POST">
-                        <input type="hidden" value={checkInData.mainGuest} name="customerName" />
-                        <input type="hidden" value={checkInData.mainGuestEmail} name="customerEmail" />
-                        <input type="hidden" value={checkInData.nights} name="numberOfNights" />
-                        <input type="hidden" value={checkInData.numOfChildren} name="numberOfChildren" />
-                        <input type="hidden" value={checkInData.numOfAdults} name="numberOfAdults" />
-                        <Button
-                        type="submit"
-                        role="link"
-                        label="Pay securely"
-                        icon="pi pi-credit-card"
-                        iconPos="right"
-                        className="payBttn"
-                        />
-                    </form>
+                        <form action="/api/checkout_session" method="POST">
+                            <input type="hidden" value={checkInData.mainGuest} name="customerName" />
+                            <input type="hidden" value={checkInData.mainGuestEmail} name="customerEmail" />
+                            <input type="hidden" value={checkInData.nights} name="numberOfNights" />
+                            <input type="hidden" value={checkInData.numOfChildren} name="numberOfChildren" />
+                            <input type="hidden" value={checkInData.numOfAdults} name="numberOfAdults" />
+                            <Button
+                            type="submit"
+                            role="link"
+                            label="Pay securely"
+                            icon="pi pi-credit-card"
+                            iconPos="right"
+                            className="payBttn"
+                            />
+                        </form>
                     </div>
                 </div>
             </div>

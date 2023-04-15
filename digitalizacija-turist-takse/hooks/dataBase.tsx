@@ -10,7 +10,9 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-  addDoc
+  addDoc,
+  getDoc,
+  where
 } from 'firebase/firestore'
 import dayjs from 'dayjs'
 import { Guest, Checkin} from '@/interfaces/interfaces-db'
@@ -31,10 +33,9 @@ const mapGuests = (guests: any[]): Guest[] => {
 
 const mapCheckins = (firestoreData: QuerySnapshot<DocumentData>): Checkin[] => {
   let checkins: Checkin[] = []
-
+  
   firestoreData.forEach((checkinDoc) => {
     const checkin = checkinDoc.data()
-
     checkins.push({
       id: checkinDoc.id,
       mainGuestName: checkin.mainGuestName,
@@ -51,6 +52,7 @@ const mapCheckins = (firestoreData: QuerySnapshot<DocumentData>): Checkin[] => {
 
 const useDB = () => {
   const [checkins, setCheckins] = useState<Checkin[]>([])
+  const [id, setId] = useState<string>("")
 
   const fetchCheckins = async () => {
     const q = query(collection(db, 'knjiga-gostov'), orderBy('createdAt', 'desc'))
@@ -71,22 +73,32 @@ const useDB = () => {
   }
 
   // @ts-ignore
-  const onFormSubmitSuccess = (data) => {
+  const onFormSubmitSuccess = async (data) => {
     // Adding a document into the collection
-    addDoc(collection(db, 'knjiga-gostov'), {
-      mainGuestName: data.mainGuestName,
-      mainGuestEmail: data.mainGuestEmail,
-      numberOfGuests: data.numberOfGuests,
-      checkInDate: data.checkInDate,
-      checkOutDate: data.checkOutDate,
-      guests: data.guests,
-      ajpes: false,
-      createdAt: new Date()
-    })
-      .then(() => {
-      })
-      .catch((error) => {
-      })
+    try {
+      const docRef = await addDoc(collection(db, 'knjiga-gostov'), {
+        mainGuestName: data.mainGuestName,
+        mainGuestEmail: data.mainGuestEmail,
+        numberOfGuests: data.numberOfGuests,
+        checkInDate: data.checkInDate,
+        checkOutDate: data.checkOutDate,
+        guests: data.guests,
+        ajpes: false,
+        createdAt: new Date()
+      });
+      const id = docRef.id;
+      return id;
+    } catch (error) {
+      // handle error
+    }
+  }
+
+  const fetchCheckin = async (checkinID: string) =>{
+    const checkinRef = doc(db, "knjiga-gostov", checkinID)
+    let checkIn = await getDoc(checkinRef)
+    return checkIn
+   
+    
   }
 
 
@@ -100,7 +112,8 @@ const useDB = () => {
     deleteCheckin,
     refetch: fetchCheckins,
     updateCheckin,
-    onFormSubmitSuccess
+    onFormSubmitSuccess,
+    fetchCheckin
   }
 }
 

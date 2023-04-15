@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {FieldArray, Formik, Form as FormikForm} from 'formik'
 import { guestsValidationSchema } from '@/helpers/form-helpers'
@@ -12,8 +12,9 @@ import NationalityField from './NationalityField'
 import DropdownField from './DropdownField'
 import { queryDataHelper } from '@/helpers/data-helper'
 import { iGuest, FormValues} from '@/interfaces/interfaces-fe'
-import useDB from '@/hooks/dataBase'
+import useDB  from '@/hooks/dataBase'
 import Link from 'next/link'
+import { MyContext } from '@/pages/_app'
 
 export let initialState: FormValues = {
     mainGuestName: '',
@@ -26,8 +27,10 @@ export let initialState: FormValues = {
 
 const GuestInfo = () =>{
 
+    const { formData, updateFormData } = useContext<any>(MyContext);
+
     const router = useRouter()
-    const useDBinst = useDB()
+    const db = useDB()
 
     // const [savedFormValues, setSavedFormValues, removeSavedFormValues] = useLocalStorage('checkin-form-values', undefined)
     const gender = ["male", "female"]
@@ -40,23 +43,52 @@ const GuestInfo = () =>{
     
     initialState = queryDataHelper(router.query)
     //@ts-ignore
-    let guests = Array(parseInt(initialState.numberOfGuests)).fill(undefined)
+    
+    let guests = Array(parseInt(formData.numberOfGuests)).fill(undefined)
 
-    const timeDiff = Math.abs((initialState.checkOutDate || new Date()).getTime() - (initialState.checkInDate || new Date()).getTime())
+    // const timeDiff = 
 
-    const numOfNights =  Math.ceil(timeDiff / (1000 * 3600 * 24));  
+    // const numOfNights =  Math.ceil(Math.abs((formData.checkOutDate || new Date()).getTime() - (formData.checkInDate || new Date()).getTime()) / (1000 * 3600 * 24));  
+
+    const checkForData = () => {
+        const storedData = sessionStorage.getItem("formData")
+        if(storedData){
+            
+            let dataJSON = JSON.parse(storedData)
+            console.log("STORED DATA",dataJSON)
+            //@ts-ignore
+            dataJSON.guests.forEach(guest => {
+                guest.dateOfBirth = new Date(guest.dateOfBirth) 
+                guest.documentNumber = parseInt(guest.documentNumber)
+            });
+            dataJSON.checkInDate = new Date (dataJSON.checkInDate)
+            dataJSON.checkOutDate = new Date (dataJSON.checkOutDate)
+
+            initialState=dataJSON
+        } else {
+            initialState = formData
+        }
+
+        return initialState
+    }
+    
 
     return (
         <>
             <Formik
-                initialValues={initialState}
-                onSubmit={values =>{
+                initialValues={checkForData()}
+                enableReinitialize
+                onSubmit={async values => {
+                    
                     let none = 0
                     let half = 0
                     let full = 0
-                    useDBinst.onFormSubmitSuccess(values)
+                    // db.onFormSubmitSuccess(values)
+                    // console.log(id)
                     var today = new Date()
                     values.guests.map( guest=> {
+                        //@ts-ignore
+                        guest.dateOfBirth = new Date(guest.dateOfBirth)
                         var birth = guest.dateOfBirth || new Date()
                         var age = today.getFullYear() - birth?.getFullYear()
                         var m = today.getMonth() - birth?.getMonth()
@@ -71,19 +103,25 @@ const GuestInfo = () =>{
                             full ++
                         } 
                     })
+
+                    console.log("FORM VALUES ",values)
+                    updateFormData({
+                        guests: values.guests
+                    })
                     
                     router.push({
                         pathname:"/paymentPage",
-                        query:{
-                            mainGuestName:initialState.mainGuestName,
-                            numOfGuests:initialState.numberOfGuests,
-                            numOfNights:numOfNights,
-                            mainGuestEmail:initialState.mainGuestEmail,
-                            none: none,
-                            numOfChildren: half,
-                            numOfAdults: full,
+                        // query:{
+                        //     mainGuestName:initialState.mainGuestName,
+                        //     numOfGuests:initialState.numberOfGuests,
+                        //     numOfNights:numOfNights,
+                        //     mainGuestEmail:initialState.mainGuestEmail,
+                        //     none: none,
+                        //     numOfChildren: half,
+                        //     numOfAdults: full,
+                        //     // id: id
 
-                        }
+                        // }
                     })
 
                 }}
@@ -100,7 +138,7 @@ const GuestInfo = () =>{
                                                 <div className = "card flex flex-wrap align-items-center justify-content-center container ">
                                                     <div className='z-5 flex flex-wrap card-container md:col-6 justify-content-center checkIn pb-5'>
                                                         <div className='flex col-12 cardTitle md:pl-4 md:pt-3 pl-3 pt-3'>
-                                                            Guest {index+1}
+                                                            Guest {index+1} 
                                                         </div>
                                                         {/* Form elements */}
                                                         <div className='flex justify-content-center align-items-center flex-wrap col-12'>
@@ -148,7 +186,7 @@ const GuestInfo = () =>{
                         </FieldArray>
                     </FormikForm>
             </Formik>
-            {router.query.numberOfGuests ? (
+
             <div className='z-0 sticky flex flex-wrap col-12 md:rigth-0 md:bottom-0 ' >
                 <div className=' z-0 sticky flex col-12 justify-content-center'>
                     <Button icon="z-0 pi pi-check" className="continue-btn p-button-rounded md:left-0 sticky" form="guestsForm" type='submit' />
@@ -156,17 +194,7 @@ const GuestInfo = () =>{
                 <small  className="z-0 flex align-items-center justify-content-center col-12 light-txt">
                     Proceed to tourist tax payment
                 </small>
-            </div>) :(
-                <div className = "flex flex-wrap justify-content-center align-items-center  gap-0">
-                    <div className='flex col-12 justify-content-center align-items-center'>
-                        Please fill out check in information first
-                    </div>
-                    <div className='flex col-12 justify-content-center align-items-center'>
-                    <Link href="/"><Button className="payBttn">Check In</Button></Link>
-                    </div>
-                </div>
-            )
-            }                                  
+            </div>                            
         </>
     )
 }

@@ -4,9 +4,14 @@ import CheckInOverview from '@/components/checkInOverview'
 import PaymentBox from '@/components/paymentBox'
 import { useRouter } from 'next/router'
 import { paymentData } from '@/interfaces/interfaces-fe'
-import { calculateTotal } from '@/helpers/payment-helper'
+import { calculateTotal, getGuestAge } from '@/helpers/payment-helper'
+import { useContext, useEffect, useState } from 'react'
+import { MyContext } from './_app'
+import useDB from '@/hooks/dataBase'
 
 const PaymentPage: NextPage = () => {
+
+  const [ _data, setData ] = useState<any>()
   
     const router = useRouter()
 
@@ -18,21 +23,44 @@ const PaymentPage: NextPage = () => {
       none = '',
       numOfChildren = '',
       numOfAdults = '',
+      id = ''
     } = router.query
 
-    
-    const data : paymentData = {
-      mainGuest: mainGuestName as string,
-      mainGuestEmail: mainGuestEmail as string,
-      nights: numOfNights as string,
-      guests: numOfGuests as string,
-      none: none as string,
-      numOfChildren: numOfChildren as string,
-      numOfAdults: numOfAdults as string,
-      tax: 0
-    }
+    const db = useDB()
 
+    
+    
+
+    const { formData, updateFormData } = useContext<any>(MyContext);
+
+    const data : paymentData = {
+      mainGuest: formData.mainGuestName as string,
+      mainGuestEmail: formData.mainGuestEmail as string,
+      nights: Math.ceil(Math.abs((formData.checkOutDate || new Date()).getTime() - (formData.checkInDate || new Date()).getTime()) / (1000 * 3600 * 24)).toString(),
+      guests: formData.numberOfGuests as string,
+      none: getGuestAge(formData, 0, 8).toString(),
+      numOfChildren: getGuestAge(formData, 8, 18).toString(),
+      numOfAdults: getGuestAge(formData, 18, 100).toString(),
+      tax: 0,
+      // id : id as string
+    }
+    console.log(data)
     data.tax = calculateTotal(data)
+    console.log("DATA TAX", data.tax)
+
+    useEffect(() => {
+      sessionStorage.setItem("formData", JSON.stringify(formData))
+      console.log("FORM DATA: ", formData)
+      
+
+
+      var today = new Date()
+      
+      
+      
+
+    }, [])
+    
 
     return(
 

@@ -5,8 +5,9 @@ export const calculateTotalAdultTax = (numOfNights: number, numOfAdults: number)
   return numOfNights * numOfAdults * prices.tax.adults
 }
 
-export const calculateTotalChildrenTax = (numOfNights: number, numOfAdults: number) => {
-  return numOfNights * numOfAdults * prices.tax.children
+export const calculateTotalChildrenTax = (numOfNights: number, numOfChildren: number) => {
+  return numOfNights * numOfChildren * prices.tax.children
+  
 }
 
 //@ts-ignore
@@ -24,3 +25,24 @@ export const calculateTotal = (details : paymentData) => {
 export const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(amount)
 }
+
+export const getGuestAge = (formData: any, min: any, max: any) => {
+  const today = new Date()
+  let amount = 0
+  formData.guests.map( guest=> {
+    //@ts-ignore
+    guest.dateOfBirth = new Date(guest.dateOfBirth)
+    var birth = guest.dateOfBirth || new Date()
+    var age = today.getFullYear() - birth?.getFullYear()
+    var m = today.getMonth() - birth?.getMonth()
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+        age--;
+    }
+    if (min < age && age < max){
+        amount++
+    }
+  
+  })
+  return amount
+}
+

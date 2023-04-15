@@ -28,3 +28,7 @@ export const guestsValidationSchema = object().shape({
   guests: array().of(guestValidationSchema).min(1, 'At least 1 guest is required.').required('Guests required.')
 })
 
+export const getGuestAge = {
+  
+}
+

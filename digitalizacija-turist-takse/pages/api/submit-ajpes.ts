@@ -3,6 +3,8 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import dayjs from 'dayjs'
 import prices from 'helpers/prices'
 import * as taxCal from 'helpers/payment-helper'
+import { Timestamp } from 'firebase/firestore'
+import firebase from 'firebase/app';
 const axios = require('axios')
 const fs = require('fs')
 const https = require('https')
@@ -12,7 +14,7 @@ dayjs.extend(customParseFormat)
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const reservation = req.body['requestBody']
-  console.log(reservation)
+  console.log("reservatin", reservation)
 
   // credentials
   const username: string = 'apiTest'
@@ -20,6 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const url: string = 'https://wwwt.ajpes.si/rno/rnoApi/eTurizem/wsETurizemPorocanje.asmx'
 
   let guests: string = ``
+
+  // reservation['checkInDate'] = new Date(reservation['checkInDate'])
+  
+  console.log(typeof reservation.checkInDate.toDate())
 
   // reformating checkin date from DD. MM. YYYY to YYYY-MM-DD for calculating
   const [dayCheckIn, monthCheckIn, yearCheckIn] = reservation['checkInDate'].split('. ')

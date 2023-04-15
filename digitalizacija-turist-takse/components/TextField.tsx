@@ -30,6 +30,7 @@ const TextField = ({
                     className={className} 
                     placeholder={placeholder}
                     tooltipOptions={{ position: 'top' }}
+                    value={field.value}
                 />
             </div>
             {meta.touched && meta.error ? (

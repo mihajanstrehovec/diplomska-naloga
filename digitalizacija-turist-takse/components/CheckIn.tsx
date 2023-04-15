@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import {Formik, Form as FormikForm} from 'formik'
 import { checkInValidationSchema } from '@/helpers/form-helpers'
@@ -9,22 +9,7 @@ import { Button } from 'primereact/button'
 import { checkInInitval } from '@/interfaces/interfaces-fe'
 import CheckInInfo from './CheckInInfo'
 import { Dialog } from 'primereact/dialog';
-// import { useLocalStorage } from 'react-use'
-
-// onSubmit={(values,{ setSubmitting })=>{
-//     // setSavedFormValues(values)
-//     router.push({
-//         pathname: '/guestPage',
-//         query: {
-//             mainGuestName: values.mainGuestName,
-//             mainGuestEmail: values.mainGuestEmail,
-//             numberOfGuests: values.numberOfGuests,
-//             checkInDate: values.checkInDate.toString(),
-//             checkOutDate: values.checkOutDate.toString()
-//         }
-//     })
-//     setSubmitting(false)
-// }}
+import { MyContext } from '@/pages/_app'
 
 const CheckIn = () => {
     const router = useRouter()
@@ -37,6 +22,12 @@ const CheckIn = () => {
     })
     const [visible, setVisible] = useState<boolean>(false) 
 
+    const { formData, updateFormData } = useContext<any>(MyContext)
+
+    
+
+    // updateFormData("CHECKIN")
+
     // const [savedFormValues, setSavedFormValues, removeSavedFormValues] = useLocalStorage('checkin-form-values', undefined)
 
     useEffect(() => {
@@ -48,18 +39,30 @@ const CheckIn = () => {
             checkOutDate
         } = router.query
 
-        setCheckInValues({
-            mainGuestName: mainGuestName as string,
-            mainGuestEmail: "",
-            numberOfGuests: parseInt(numberOfGuests as string),
-            checkInDate: new Date(checkInDate as string),
-            checkOutDate: new Date(checkOutDate as string)
-        })
+        if(mainGuestName){
+            setCheckInValues({
+                mainGuestName: mainGuestName as string,
+                mainGuestEmail: "",
+                numberOfGuests: parseInt(numberOfGuests as string),
+                checkInDate: new Date(checkInDate as string),
+                checkOutDate: new Date(checkOutDate as string)
+            })
+    
+            
+            updateFormData({
+                mainGuestName: mainGuestName as string,
+                numberOfGuests: parseInt(numberOfGuests as string),
+                checkInDate: new Date(checkInDate as string),
+                checkOutDate: new Date(checkOutDate as string)
+            })
+        }
+
+        
 
     }, [router])
 
-    console.log("checkInValues")
-    
+   
+    // console.log(formData)
 
     const onButtonClick = () => {
         router.push({
@@ -103,22 +106,26 @@ const CheckIn = () => {
                     Proceed to guest info page
                 </small>
             </div>
-            <Dialog header="Email" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
+            <Dialog header="Email" visible={visible} className='md:col-6 col-12' onHide={() => setVisible(false)}>
                 <div className='flex flex-wrap align-items-center justify-content-center'>
                     <p>Please enter your email addres. Here you will recieve the reciept as well as the code for the apartment lock.</p>
                     <div className='flex flex-wrap align-items-center justify-content-center'>
                         <Formik
                             initialValues={{mainGuestEmail: ''}}
                             onSubmit={(values,{ setSubmitting })=>{
+                                updateFormData({
+                                    mainGuestEmail: values.mainGuestEmail
+                                })
+                                console.log(formData)
                                 router.push({
                                     pathname: '/guestPage',
-                                    query: {
-                                        mainGuestName: checkInValues.mainGuestName,
-                                        mainGuestEmail: values.mainGuestEmail,
-                                        numberOfGuests: checkInValues.numberOfGuests,
-                                        checkInDate: checkInValues.checkInDate.toString(),
-                                        checkOutDate: checkInValues.checkOutDate.toString()
-                                    }
+                                    // query: {
+                                    //     mainGuestName: checkInValues.mainGuestName,
+                                    //     mainGuestEmail: values.mainGuestEmail,
+                                    //     numberOfGuests: checkInValues.numberOfGuests,
+                                    //     checkInDate: checkInValues.checkInDate.toString(),
+                                    //     checkOutDate: checkInValues.checkOutDate.toString()
+                                    // }
                                 })
                                 setSubmitting(false)
                             }}
