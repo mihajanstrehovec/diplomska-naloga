@@ -51,9 +51,10 @@ const GuestInfo = () =>{
     // const numOfNights =  Math.ceil(Math.abs((formData.checkOutDate || new Date()).getTime() - (formData.checkInDate || new Date()).getTime()) / (1000 * 3600 * 24));  
 
     const checkForData = () => {
-        const storedData = sessionStorage.getItem("formData")
-        if(storedData){
-            
+        
+        if(sessionStorage.getItem("formData")){
+            const storedData = sessionStorage.getItem("formData")
+            //@ts-ignore
             let dataJSON = JSON.parse(storedData)
             console.log("STORED DATA",dataJSON)
             //@ts-ignore
