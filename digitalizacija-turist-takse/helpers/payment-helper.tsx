@@ -29,7 +29,8 @@ export const formatCurrency = (amount: number) => {
 export const getGuestAge = (formData: any, min: any, max: any) => {
   const today = new Date()
   let amount = 0
-  formData.guests.map( guest=> {
+  //@ts-ignore
+  formData.guests.map( guest => {
     //@ts-ignore
     guest.dateOfBirth = new Date(guest.dateOfBirth)
     var birth = guest.dateOfBirth || new Date()
