@@ -45,6 +45,8 @@ const GuestInfo = () =>{
     //@ts-ignore
     
     let guests = Array(parseInt(formData.numberOfGuests)).fill(undefined)
+    console.log("guests", guests)
+    console.log(formData)
 
     // const timeDiff = 
 
