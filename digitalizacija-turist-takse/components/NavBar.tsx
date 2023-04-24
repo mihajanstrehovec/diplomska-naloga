@@ -3,11 +3,13 @@ import { useRouter } from 'next/router'
 
 const NavBar = () => {
     const router = useRouter()
-    const pageNames = {"/" : "Check in","/guestPage" : "Guests", "/paymentPage" : "Payment", "/adminPage" : "Admin"}
+    const pageNames = {"/" : "Checkin","/guestPage" : "Guests", "/paymentPage" : "Payment", "/adminPage" : "Admin"}
     
     return(
-        <div className = "sticky flex align-items-center justify-content-center top-0 navbar md:pl-0 pl-6 ">
-            {pageNames[router.route as keyof typeof pageNames]}
+        <div className = "grid sticky  align-items-center  top-0 navbar md:pl-3 pl-6 ">
+
+                <div className='col-8'>{pageNames[router.route as keyof typeof pageNames]}</div>
+                
         </div>
     )
     

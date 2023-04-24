@@ -81,16 +81,25 @@ const CheckIn = () => {
     const initialVals = {
         mainGuestEmail: ""
     }
+    
+    console.log(checkInValues.mainGuestName)
+
+    if (checkInValues.mainGuestName == "") {
+        console.log("JSJAPSD")
+        // return {
+        //     notFound: true
+        // }
+    }
   
 
     return (
         
-        <div className = "card flex flex-wrap align-items-center justify-content-center container">
-            <div className='flex flex-wrap card-container sm:col-12 md:col-6 xl:col-6 justify-content-center checkIn pb-5'>
+        <div className = "card flex flex-wrap align-items-center justify-content-center container-checkin">
+            <div className='flex flex-wrap card-container sm:col-12 md:col-6 xl:col-4 justify-content-center checkIn pb-5'>
                 <div className='flex col-12 cardTitle md:pl-4 md:pt-3 pl-3 pt-3'>
-                    Check-in
+                    CHECK IN
                 </div>
-                <div className='md:col-6'>
+                <div className='md:col-9'>
 
                     <CheckInInfo infoTxt="Main guest" info={checkInValues.mainGuestName}  divider={true}/>
                     <CheckInInfo infoTxt="Number of guests" info={checkInValues.numberOfGuests.toString()}  divider={true}/>
@@ -120,13 +129,6 @@ const CheckIn = () => {
                                 console.log(formData)
                                 router.push({
                                     pathname: '/guestPage',
-                                    // query: {
-                                    //     mainGuestName: checkInValues.mainGuestName,
-                                    //     mainGuestEmail: values.mainGuestEmail,
-                                    //     numberOfGuests: checkInValues.numberOfGuests,
-                                    //     checkInDate: checkInValues.checkInDate.toString(),
-                                    //     checkOutDate: checkInValues.checkOutDate.toString()
-                                    // }
                                 })
                                 setSubmitting(false)
                             }}

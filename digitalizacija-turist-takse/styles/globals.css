@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700&display=swap');
+
 .checkIn{
     background: linear-gradient(180deg, #FFB800 13.54%, #FFFFFF 13.55%);
     box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.1);
@@ -6,8 +8,9 @@
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-      'Droid Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Dosis';
+    color:#828282;
+    font-weight:500;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: 100vh;
@@ -20,14 +23,18 @@ body {
     min-height: 90vh;
 }
 
+.container-checkin{
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    min-height: 90vh;
+}
+
 .container-payment{
     max-width: 1480px;
-    
-   
 }
 
 .main {
-    
     padding: 4rem 0;
     flex: 1;
     display: flex;
@@ -39,14 +46,19 @@ body {
 .navbar{
     color: #FFB800;
     font-weight:700;
-    font-size: 2vh;
+    font-size: 2.5vh;
     min-height: 7vh;
-    max-width: 7vw;
+    max-width: 90vw;
   
 }
 
 @media all and (min-width:0px) and (max-width: 568px) {
     .navbar{
+        visibility: hidden!important;
+        min-height: 5vh!important;
+        width: 0px;
+    }
+    .plane{
         visibility: hidden!important;
         min-height: 5vh!important;
         width: 0px;
@@ -57,12 +69,12 @@ body {
     max-height: 10vh;
     margin-bottom: 6vh;
     color: white;
-    font-weight: 600;
-    font-size:larger;
+    font-weight: 700;
+    font-size: 1.5em;
 }
 
 .continue-btn{
-    background-color: #FFB800!important;
+    background-color: #ffcf56!important;
     border: 0!important;
     --highlight-text-color: #ffcf56!important;
 
@@ -149,8 +161,9 @@ input:focus{
 }
 
 .payBttn{
-    background-color: #FFB800!important;
-    border-color: #FFB800!important;
+    background-color: #ffcf56!important;
+    opacity: 1!important;
+    border-color: #ffcf56!important;
 }
 
 .payBttn:focus{
@@ -163,6 +176,15 @@ input:focus{
     margin-top: 12vh;
 }
 
+table th:first-child{
+    border-radius:20px 0 0 20px;
+}
+  
+table th:last-child{
+    border-radius:0 20px 20px 0;
+}
+
+
 
 th{
     background: #f4af00!important;
@@ -171,6 +193,13 @@ th{
 
 .p-datatable-row-expansion th{
     background: #ffcb48!important;
+    height: 8vh;
+}
+
+.delete-checkin-btn{
+    background-color: #FFC635!important;
+    opacity: 0.85;
+    border: none!important;
 }
 
 
@@ -194,4 +223,9 @@ body:has(h1#success){
 
 input::placeholder{
     color: rgba(0, 0, 0, 0.763);
+}
+
+.plane{
+    position:fixed;
+    z-index: -222;
 }

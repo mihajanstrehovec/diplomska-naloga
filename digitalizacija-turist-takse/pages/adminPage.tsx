@@ -47,7 +47,7 @@ const AdminPage: NextPage = () => {
         type="button"
         icon="pi pi-trash"
         onClick={() => confirmDel(checkin)}
-        className="p-button-rounded p-button-danger p-button-outlined"/>
+        className="p-button-rounded delete-checkin-btn"/>
     )
   }
 

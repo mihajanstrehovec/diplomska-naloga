@@ -67,6 +67,9 @@ const PaymentPage: NextPage = () => {
             <PaymentBox {...data}/>
           </div>
         </div>
+        <div className='plane bottom-0 right-0'>
+          <img src={'/img/plane_frame_3.png'}></img>
+        </div>
       </Layout> 
   )
 

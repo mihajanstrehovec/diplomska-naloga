@@ -4,6 +4,9 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css'
 import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
 import 'styles/flags.css'
+import { Dosis } from '@next/font/google'
+const dosis = Dosis({ subsets: ['latin'] })
+
 
 import type { AppProps } from 'next/app'
 import React, { createContext, useState } from 'react'
@@ -35,8 +38,8 @@ function MyProvider(props:any) {
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MyProvider>
-      <Component {...pageProps} />
+    <MyProvider >
+      <Component className={dosis.className} {...pageProps} />
     </MyProvider>
   )
 }
