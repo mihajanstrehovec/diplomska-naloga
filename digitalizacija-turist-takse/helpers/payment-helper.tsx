@@ -6,7 +6,7 @@ export const calculateTotalAdultTax = (numOfNights: number, numOfAdults: number)
 }
 
 export const calculateTotalChildrenTax = (numOfNights: number, numOfChildren: number) => {
-  return numOfNights * numOfChildren * prices.tax.children
+  return Math.round((numOfNights * numOfChildren * prices.tax.children)*100)/100
   
 }
 

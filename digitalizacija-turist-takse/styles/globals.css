@@ -246,3 +246,38 @@ input::placeholder{
 .p-toast-message-content button{
     border-radius: 2em!important;
 }
+
+.p-datatable-wrapper{
+    min-height: 50vh;
+  
+}
+
+div::-webkit-scrollbar
+{
+
+    background-color:white;
+
+}
+
+div::-webkit-scrollbar-thumb
+{
+    background-color:#f4af00;
+}
+
+::-webkit-scrollbar
+{
+    
+    background-color:white;
+
+}
+
+::-webkit-scrollbar-thumb
+{
+    
+    background-color:#f4af0057;
+}
+
+.container:last-of-type{
+   
+    margin-bottom: 10px!important;
+}

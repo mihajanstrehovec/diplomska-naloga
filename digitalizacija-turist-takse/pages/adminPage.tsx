@@ -179,7 +179,7 @@ const AdminPage: NextPage = () => {
       
       <div className="card mb-6">
         <div className="datatable-rowexpansion-demo mb-10vh ">
-          <div className="flex justify-content-center ">
+          <div className="flex justify-content-center admin-table ">
             <DataTable
               value={checkins}
               expandedRows={expandedRows}
