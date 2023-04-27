@@ -218,7 +218,7 @@ th{
 }
 
 body:has(h1#success){
-    background-color: #ffcb48;
+    background-color: #FFB800;
 }
 
 input::placeholder{
@@ -228,4 +228,21 @@ input::placeholder{
 .plane{
     position:fixed;
     z-index: -222;
+}
+
+#success-small{
+    font-weight: 300!important;
+    font-size: 0.7em!important;
+}
+
+.p-toast-message-content{
+    border-radius: 30px!important;
+}
+
+.p-toast-message{
+    border-radius: 30px!important;
+}
+
+.p-toast-message-content button{
+    border-radius: 2em!important;
 }

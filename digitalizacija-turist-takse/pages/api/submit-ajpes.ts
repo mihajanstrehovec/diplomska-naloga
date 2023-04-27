@@ -1,10 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import dayjs from 'dayjs'
-import prices from 'helpers/prices'
 import * as taxCal from 'helpers/payment-helper'
-import { Timestamp } from 'firebase/firestore'
-import firebase from 'firebase/app';
+import { Checkin } from '@/interfaces/interfaces-db'
 const axios = require('axios')
 const fs = require('fs')
 const https = require('https')
@@ -13,8 +11,20 @@ const parser = require('xml2json')
 dayjs.extend(customParseFormat)
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const reservation = req.body['requestBody']
-  console.log("reservatin", reservation)
+  let checkin = ""
+  let checkout = ""
+  let reservation : Checkin
+  if(req.body['dataJSON']){
+    reservation = req.body['dataJSON']
+    checkin = reservation['checkInDate'].split("T")[0]
+    checkout = reservation['checkOutDate'].split("T")[0]
+  } else {
+    reservation = req.body["requestBody"]
+    const [dayCheckIn, monthCheckIn, yearCheckIn] = reservation['checkInDate'].split('. ')
+    checkin = yearCheckIn + '-' + monthCheckIn + '-' + dayCheckIn
+    const [dayCheckOut, monthCheckOut, yearCheckOut] = reservation['checkOutDate'].split('. ')
+    checkout = yearCheckOut + '-' + monthCheckOut + '-' + dayCheckOut
+  }
 
   // credentials
   const username: string = 'apiTest'
@@ -23,17 +33,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let guests: string = ``
 
-  // reservation['checkInDate'] = new Date(reservation['checkInDate'])
-  
-  console.log(typeof reservation.checkInDate.toDate())
-
-  // reformating checkin date from DD. MM. YYYY to YYYY-MM-DD for calculating
-  const [dayCheckIn, monthCheckIn, yearCheckIn] = reservation['checkInDate'].split('. ')
-  const checkin = yearCheckIn + '-' + monthCheckIn + '-' + dayCheckIn
-  const [dayCheckOut, monthCheckOut, yearCheckOut] = reservation['checkOutDate'].split('. ')
-  const checkout = yearCheckOut + '-' + monthCheckOut + '-' + dayCheckOut
-
-
   //@ts-ignore
   reservation['guests'].forEach((guest, index) => {
     // Creating XML rows based on number of guests, zst is incremented and starts from 1
@@ -41,7 +40,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // reformating date of birth from DD. MM. YYYY to YYYY-MM-DD
     // and calculating age from acquired dates
     const [day, month, year] = guest['dateOfBirth'].split('. ')
-    const newDate = year + '-' + month + '-' + day
+    let newDate = ""
+    if(month){
+      newDate = year + '-' + month + '-' + day
+    }else {
+      newDate =  guest['dateOfBirth'].split("T")[0]
+    }
+    
     //@ts-ignore
     const difference: number = Math.abs(dayjs() - dayjs(newDate, 'YYYY-MM-DD'))
     const age = Math.floor(difference / (1000 * 3600 * 24) / 365)
@@ -59,7 +64,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       settlement = 1
     }
 
-
     // creating and attaching current guest info row to all guests
     guests += `<row idNO="0" zst="${index + 1}"
     ime="${guest['firstName']}" 
@@ -75,6 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ttVisina="${tax}" 
     status="1"/>`
   })
+  
 
   const format: number = 2 // Answer in JSON (1 for XML)
 

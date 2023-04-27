@@ -2,7 +2,7 @@ import prices from 'helpers/prices'
 import { paymentData } from '@/interfaces/interfaces-fe'
 
 export const calculateTotalAdultTax = (numOfNights: number, numOfAdults: number) => {
-  return numOfNights * numOfAdults * prices.tax.adults
+  return Math.round((numOfNights * numOfAdults * prices.tax.adults)*100)/100
 }
 
 export const calculateTotalChildrenTax = (numOfNights: number, numOfChildren: number) => {

@@ -42,7 +42,6 @@ const PaymentPage: NextPage = () => {
       numOfChildren: getGuestAge(formData, 8, 18).toString(),
       numOfAdults: getGuestAge(formData, 18, 100).toString(),
       tax: 0,
-      // id : id as string
     }
     console.log(data)
     data.tax = calculateTotal(data)
