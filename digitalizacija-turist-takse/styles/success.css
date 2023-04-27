@@ -1,0 +1,13 @@
+#success{
+    color: white!important;
+    font-weight: 500;
+}
+
+body:has(h1#success){
+    background-color: #FFB800;
+}
+
+#success-small{
+    font-weight: 300!important;
+    font-size: 0.7em!important;
+}

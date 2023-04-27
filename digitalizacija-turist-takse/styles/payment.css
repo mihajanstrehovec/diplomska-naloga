@@ -1,0 +1,13 @@
+#email{
+    opacity: 0.5;
+}
+
+.payBttn{
+    background-color: #ffcf56!important;
+    opacity: 1!important;
+    border-color: #ffcf56!important;
+}
+
+.payBttn:focus{
+    box-shadow: 0 0 5px #FFB800!important;
+}

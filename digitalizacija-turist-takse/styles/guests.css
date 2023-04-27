@@ -1,0 +1,55 @@
+.fieldStyle{
+    width:inherit;
+}
+
+.p-inputnumber-input{
+    width:inherit;
+}
+
+
+.p-calendar{
+    width:inherit!important;
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight{
+    border-color: #FFB800!important;
+    background: #FFB800!important;
+}
+
+.p-radiobutton-box:hover{
+    border-color: #FFB800!important;
+   
+}
+
+input:hover{
+    border-color: #FFB800!important;
+   
+}
+
+input:focus{
+    border-color: #FFB800!important;
+    box-shadow: 0 0 5px #FFB800!important;
+}
+
+.p-inputwrapper-focus{
+    border-color: #FFB800!important;
+    box-shadow: 0 0 5px #FFB800!important;
+}
+
+.p-dropdown:hover{
+    border-color: #FFB800!important;
+}
+
+.p-button-rounded:focus{
+    border-color: #FFB800!important;
+    box-shadow: 0 0 5px #FFB800!important;
+}
+
+.p-autocomplete-dropdown{
+    background: #FFB800!important;
+    border: #FFB800!important;
+}
+
+input::placeholder{
+    color: rgba(0, 0, 0, 0.763);
+}

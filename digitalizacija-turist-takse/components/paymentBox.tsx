@@ -33,7 +33,7 @@ const PaymentBox = (checkInData : paymentData) =>{
 
     const adultTax = calculateTotalAdultTax(parseInt(checkInData.nights), parseInt(checkInData.numOfAdults))
     const childrenTax = calculateTotalChildrenTax(parseInt(checkInData.nights), parseInt(checkInData.numOfChildren))
-    const tax = adultTax + childrenTax
+    const tax = Math.round((adultTax + childrenTax)*100)/100
 
     
     return (

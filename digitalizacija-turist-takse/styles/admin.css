@@ -1,0 +1,79 @@
+.table{
+    min-width: 80vw;
+    margin-top: 12vh;
+}
+
+table th:first-child{
+    border-radius:20px 0 0 20px;
+}
+  
+table th:last-child{
+    border-radius:0 20px 20px 0;
+}
+
+th{
+    background: #f4af00!important;
+    color: white!important;
+}
+
+.p-datatable-row-expansion th{
+    background: #ffcb48!important;
+    height: 8vh;
+}
+
+.delete-checkin-btn{
+    background-color: #FFC635!important;
+    opacity: 0.85;
+    border: none!important;
+}
+
+.delToast .p-toast-message-content{
+    background-color: #ffcb48!important;
+    color: white!important;
+}
+
+.delToast .p-button-warning{
+    background-color: #EF4444!important;
+}
+
+.p-toast-message-content{
+    border-radius: 30px!important;
+}
+
+.p-toast-message{
+    border-radius: 30px!important;
+}
+
+.p-toast-message-content button{
+    border-radius: 2em!important;
+}
+
+/* .p-datatable-wrapper{
+    min-height: 50vh;
+  
+} */
+
+div::-webkit-scrollbar
+{
+
+    background-color:white;
+
+}
+
+div::-webkit-scrollbar-thumb
+{
+    background-color:#f4af00;
+}
+
+::-webkit-scrollbar
+{
+    
+    background-color:white;
+
+}
+
+::-webkit-scrollbar-thumb
+{
+    
+    background-color:#f4af0057;
+}
