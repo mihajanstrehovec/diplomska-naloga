@@ -1,4 +1,3 @@
-import { checkInInitval } from '@/interfaces/interfaces-fe'
 import { array, date, number, object, string } from 'yup'
 
 export const guestValidationSchema = object().shape({

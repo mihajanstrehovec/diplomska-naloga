@@ -13,7 +13,7 @@ const NationalityField = ({ name }: { name: string }) => {
     if (selectedCountry) {
       helpers.setValue(selectedCountry.code)
     }
-  }, [selectedCountry]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selectedCountry])
 
   const searchCountry = (event: { query: string }) => {
     let _filteredCountries

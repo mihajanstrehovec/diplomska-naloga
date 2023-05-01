@@ -1,23 +1,25 @@
 import React from 'react'
-import { Divider } from 'primereact/divider';
 import CheckInInfo from './CheckInInfo';
 
 //@ts-ignore
-const Container = ({title, checkInValues, className}) => {
-
+const Container = ({title, data, email} : {
+        title:string,
+        data:any,
+        email?:string
+    }) => {
 
     return(
-            <div className={`flex flex-wrap card-container ${className}`}>
-                <div className='flex col-12 cardTitle md:pl-4 md:pt-3 pl-3 pt-3'>
+            <div className={`flex flex-wrap justify-content-center card-container pb-4`}>
+                <div className='flex col-12 cardTitle md:pl-4 md:pt-3 pl-3'>
                     {title}
                 </div>
-                <div className='md:col-9'>
+                <div className='md:col-10'>
 
-                    <CheckInInfo infoTxt="Main guest" info={checkInValues.mainGuestName}  divider={true}/>
-                    <CheckInInfo infoTxt="Number of guests" info={checkInValues.numberOfGuests.toString()}  divider={true}/>
-                    <CheckInInfo infoTxt="Check-in date" info={checkInValues.checkInDate.toDateString()}  divider={true}/>
-                    <CheckInInfo infoTxt="Check-out date" info={checkInValues.checkOutDate.toDateString()} divider={true}/>
-
+                    {data.length > 0 &&
+                        //@ts-ignore
+                        data.map((guest, index: number) => (
+                            <CheckInInfo key={index} infoTxt={guest.text} info={guest.value} i={index} email={email} divider={true}/>
+                        ))}
                 </div>
             </div>
     )

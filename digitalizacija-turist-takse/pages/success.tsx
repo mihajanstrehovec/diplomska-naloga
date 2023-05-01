@@ -1,9 +1,8 @@
 import type {NextPage} from 'next'
 import Layout from '@/components/Layout'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useDB from '@/hooks/dataBase'
-import { MyContext } from './_app'
 import Plane from '@/components/Plane'
 
 const Success: NextPage = () => {
@@ -11,17 +10,9 @@ const Success: NextPage = () => {
 
   const router = useRouter()
   const failed  = router.query["canceled"]
-  const id = router.query["id"] as string
-  const [checkin, setCheckin] = useState<any>()
-  const { formData, updateFormData } = useContext<any>(MyContext);
   const [storedData, setStoredData] = useState<any>(undefined)
 
   const db = useDB()
-
-  // useEffect(() => {
-  //   console.log("CONTEXT FORM DATA success: ", formData)
-
-  // }, [])
 
   useEffect(() => {
     setStoredData(sessionStorage.getItem("formData"))
@@ -46,21 +37,17 @@ const Success: NextPage = () => {
           const res = await response.json()
           if(response.status == 200){
             if (res["@failure"] == 0){
-              console.log("SUCCESS")
-              // await updateCheckin(id)
+              const id : string = await db.onFormSubmitSuccess(dataJSON) as string
+              console.log(id)
+              await updateCheckin(id)
             } else {
               console.log("ERROR",`${res["row"][0]["@msgTxt"]}`)
             }
           } else {
             console.log(res)
           }
-        }).then(async () => {
-          const id : string = await db.onFormSubmitSuccess(dataJSON) as string
-          await updateCheckin(id)
         })
     }
-
-    
   }, [storedData])
   
 

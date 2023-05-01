@@ -2,13 +2,12 @@ import type {NextPage} from 'next'
 import Layout from '@/components/Layout'
 import CheckInOverview from '@/components/checkInOverview'
 import PaymentBox from '@/components/paymentBox'
-import { useRouter } from 'next/router'
 import { paymentData } from '@/interfaces/interfaces-fe'
 import { calculateTotal, getGuestAge } from '@/helpers/payment-helper'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { MyContext } from './_app'
-import useDB from '@/hooks/dataBase'
 import Plane from '@/components/Plane'
+import NavBar from '@/components/NavBar'
 
 const PaymentPage: NextPage = () => {
 
@@ -39,6 +38,7 @@ const PaymentPage: NextPage = () => {
     return(
 
       <Layout>
+        <NavBar activeIndex={2}/>
         <div className='flex flex-wrap justify-content-center align-items-center'>
           <div className='md:col-4'>
             <CheckInOverview {...data}/>

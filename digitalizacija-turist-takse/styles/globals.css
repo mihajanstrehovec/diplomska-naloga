@@ -41,10 +41,26 @@ body {
     color: #FFB800;
     font-weight:700;
     font-size: 2.5vh;
-    min-height: 7vh;
-    max-width: 90vw;
-  
+    max-height: 11vh!important;
+    /* max-width: 90vw; */
 }
+
+.p-steps{
+    
+}
+
+.p-steps-title{
+    font-family: 'Dosis'!important;
+    color: #FFB800!important;
+}
+
+.p-steps-number{
+    font-family: 'Dosis'!important;
+    color: #FFB800!important;
+}
+
+
+
 
 @media all and (min-width:0px) and (max-width: 568px) {
     .navbar{
