@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useState } from 'react'
 import useDB from '@/hooks/dataBase'
 import { MyContext } from './_app'
+import Plane from '@/components/Plane'
 
 const Success: NextPage = () => {
   const { updateCheckin } = useDB()
@@ -73,9 +74,7 @@ const Success: NextPage = () => {
             </div>
           }
         </div>
-        <div className='plane bottom-0 right-0'>
-          <img src={'/img/plane_frame_4.png'}></img>
-        </div>
+        <Plane iteration="4"/>
     </Layout>
   )
 

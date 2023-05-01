@@ -53,7 +53,6 @@ const mapCheckins = (firestoreData: QuerySnapshot<DocumentData>): Checkin[] => {
 const useDB = () => {
   const [checkins, setCheckins] = useState<Checkin[]>([])
   const [id, setId] = useState<string>("")
-
   const fetchCheckins = async () => {
     const q = query(collection(db, 'knjiga-gostov'), orderBy('createdAt', 'desc'))
     const data = await getDocs(q)
@@ -100,8 +99,6 @@ const useDB = () => {
    
     
   }
-
-
 
   useEffect(() => {
     fetchCheckins()

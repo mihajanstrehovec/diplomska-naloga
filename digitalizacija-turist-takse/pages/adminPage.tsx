@@ -123,9 +123,8 @@ const AdminPage: NextPage = () => {
   const sendData = async (requestBody: Checkin) => {
     //@ts-ignore
     closeToast(toastBC.current)
-
     return new Promise((resolve, reject) => {
-      
+
       fetch('/api/submit-ajpes', {
         method: 'POST',
         headers: {
@@ -179,17 +178,17 @@ const AdminPage: NextPage = () => {
       
       <div className="card mb-6">
         <div className="datatable-rowexpansion-demo mb-10vh ">
-          <div className="flex justify-content-center admin-table ">
+          <div className="flex justify-content-center">
             <DataTable
               value={checkins}
               expandedRows={expandedRows}
               onRowToggle={rowToggled}
               responsiveLayout="scroll"
               scrollable
-              scrollHeight="500px"
+              scrollHeight="70vh"
               rowExpansionTemplate={rowExpansionTemplate}
               dataKey="id"
-              className="md:col-6 col-11 shadow-4 table p-0 mb-5"
+              className="md:col-6 admin-table border shadow-4 table p-0 mb-5"
               size="large"
               >
               <Column expander style={{ width: '3em' }} />

@@ -6,27 +6,6 @@ import Prices from './Prices'
 import { calculateTotalAdultTax, calculateTotalChildrenTax } from '@/helpers/payment-helper'
 
 // 4000007050000006
-// any 3 number CV
-// Date in the future
-
-// Legitimizacija podatkov
-// Slika mejla 
-// Celotna slika!! 
-// PIN koda na mejl po opravi plačevanja 
-// Integracija z https://www.ringolock.com/how-does-ringo-work/
-// Pravni vidik!!
-// UI, kakšen mejl (catchy!! kot letalski emjli za cactchin)
-// Save information 
-// kako zgleda kjučavnica 
-// Booking 1.0, 2.0 (locker), 3.0 (no host needed)
-// Opiši problem 
-// Čimveč slik!!
-// code integration with stripe (chat gpt )
-// brisanje iz AJPESA
-
-// Osebnih podatkov oz. dokumentov ni dovoljeno fotografirati ali fotokopirati (zlasti ne hranite
-// skeniranih osebnih izkaznic ali potnih listin oz. drugih identifikacijskih dokumentov).
-
 
 const PaymentBox = (checkInData : paymentData) =>{
 
@@ -38,9 +17,9 @@ const PaymentBox = (checkInData : paymentData) =>{
     
     return (
         <>
-            <div className = "card flex flex-wrap align-items-center justify-content-center p-0 container-payment md:mt-8 md:mb-8  mt-3 mb-5">
-                <div className='flex flex-wrap card-container col-9 justify-content-center checkIn md:mt-8   pb-5'>
-                    <div className='flex col-12 cardTitle '>
+            <div className = "flex justify-content-center mt-3 md:mt-0">
+                <div className='flex flex-wrap col-9 justify-content-center container-style md:mt-6 pb-5'>
+                    <div className='col-12 cardTitle'>
                         Payment
                     </div>
                     <div className='col-10 p-0'>
@@ -67,12 +46,12 @@ const PaymentBox = (checkInData : paymentData) =>{
                             <input type="hidden" value={checkInData.numOfChildren} name="numberOfChildren" />
                             <input type="hidden" value={checkInData.numOfAdults} name="numberOfAdults" />
                             <Button
-                            type="submit"
-                            role="link"
-                            label="Pay securely"
-                            icon="pi pi-credit-card"
-                            iconPos="right"
-                            className="payBttn"
+                                type="submit"
+                                role="link"
+                                label="Pay securely"
+                                icon="pi pi-credit-card"
+                                iconPos="right"
+                                className="payBttn"
                             />
                         </form>
                     </div>

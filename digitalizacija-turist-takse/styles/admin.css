@@ -3,6 +3,10 @@
     margin-top: 12vh;
 }
 
+.admin-table{
+    border-radius:20px 0px 0px 0px;
+}
+
 table th:first-child{
     border-radius:20px 0 0 20px;
 }

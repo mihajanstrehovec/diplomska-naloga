@@ -8,29 +8,11 @@ import { calculateTotal, getGuestAge } from '@/helpers/payment-helper'
 import { useContext, useEffect, useState } from 'react'
 import { MyContext } from './_app'
 import useDB from '@/hooks/dataBase'
+import Plane from '@/components/Plane'
 
 const PaymentPage: NextPage = () => {
 
-  const [ _data, setData ] = useState<any>()
   
-    const router = useRouter()
-
-    const {
-      mainGuestName = '',
-      mainGuestEmail = '',
-      numOfNights = '',
-      numOfGuests = '',
-      none = '',
-      numOfChildren = '',
-      numOfAdults = '',
-      id = ''
-    } = router.query
-
-    const db = useDB()
-
-    
-    
-
     const { formData, updateFormData } = useContext<any>(MyContext);
 
     const data : paymentData = {
@@ -43,9 +25,8 @@ const PaymentPage: NextPage = () => {
       numOfAdults: getGuestAge(formData, 18, 100).toString(),
       tax: 0,
     }
-    console.log(data)
+
     data.tax = calculateTotal(data)
-    console.log("DATA TAX", data.tax)
 
     useEffect(() => {
       if (typeof sessionStorage !== 'undefined') {
@@ -58,17 +39,15 @@ const PaymentPage: NextPage = () => {
     return(
 
       <Layout>
-        <div className='flex flex-wrap gap-0 p-0 justify-content-center align-items-center col-12 m-0 '>
-          <div className='md:col-4 justify-content-center align-items-center p-0 m-0'>
+        <div className='flex flex-wrap justify-content-center align-items-center'>
+          <div className='md:col-4'>
             <CheckInOverview {...data}/>
           </div>
-          <div className='md:col-4 justify-content-center align-items-center m-0 p-0 '>
+          <div className='md:col-4'>
             <PaymentBox {...data}/>
           </div>
         </div>
-        <div className='plane bottom-0 right-0'>
-          <img src={'/img/plane_frame_3.png'}></img>
-        </div>
+        <Plane iteration="3"/>
       </Layout> 
   )
 
