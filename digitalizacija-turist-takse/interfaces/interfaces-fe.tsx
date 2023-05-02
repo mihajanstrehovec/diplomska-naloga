@@ -6,6 +6,11 @@ export interface checkInInitval {
     checkOutDate: Date
 }
 
+export interface iContainerData {
+    text: string
+    value: string
+}
+
 export interface iGuest {
     firstName?: string
     lastName?: string
@@ -48,4 +53,6 @@ export interface paymentData {
     numOfChildren: string,
     numOfAdults: string
 }
+
+
 

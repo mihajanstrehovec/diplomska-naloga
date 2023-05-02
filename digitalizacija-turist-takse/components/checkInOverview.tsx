@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import CheckInInfo from './CheckInInfo'
-import { paymentData } from '@/interfaces/interfaces-fe'
+import { iContainerData, paymentData } from '@/interfaces/interfaces-fe'
 import Container from './Container'
 
 const CheckInOverview = (data : paymentData) =>{
-    //@ts-ignore
-    const [dataObject, setDataObject] = useState<[{}]>([
+
+    const [dataObject, setDataObject] = useState<iContainerData[]>([
         {text:"Main guest", value: "sadasda"},
         {text:"Nights", value: "sadasda"},
         {text:"Guests", value: "sadasda"},
@@ -13,7 +13,6 @@ const CheckInOverview = (data : paymentData) =>{
 
     useEffect(() => {
         setDataObject(
-            //@ts-ignore
             [
                 {text:"Main guest", value: data.mainGuest},
                 {text:"Nights", value: data.nights},
@@ -21,9 +20,7 @@ const CheckInOverview = (data : paymentData) =>{
             ]
         )
     }, [data])
-    
 
-    
     return (
         <>
             <div className = "flex justify-content-center md:mt-8 md:mb-8">

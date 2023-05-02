@@ -11,6 +11,7 @@ const Success: NextPage = () => {
   const router = useRouter()
   const failed  = router.query["canceled"]
   const [storedData, setStoredData] = useState<any>(undefined)
+  const [sentAjpes, setSentAjpes] = useState<Boolean>(false)
 
   const db = useDB()
 
@@ -37,16 +38,20 @@ const Success: NextPage = () => {
           const res = await response.json()
           if(response.status == 200){
             if (res["@failure"] == 0){
-              const id : string = await db.onFormSubmitSuccess(dataJSON) as string
-              console.log(id)
-              await updateCheckin(id)
+              setSentAjpes(true)
             } else {
               console.log("ERROR",`${res["row"][0]["@msgTxt"]}`)
             }
           } else {
             console.log(res)
           }
-        })
+        }).then(async () => {
+            const id : string = await db.onFormSubmitSuccess(dataJSON) as string
+            if (sentAjpes){
+              await updateCheckin(id)
+            }
+          })
+        
     }
   }, [storedData])
   

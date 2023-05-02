@@ -4,33 +4,25 @@ import {Formik, Form as FormikForm} from "formik"
 import { checkInValidationSchema } from "@/helpers/form-helpers"
 import TextField from "./form-items/TextField"
 import { Button } from "primereact/button"
-import { checkInInitval } from "@/interfaces/interfaces-fe"
-import CheckInInfo from "./CheckInInfo"
+import { checkInInitval, iContainerData } from "@/interfaces/interfaces-fe"
 import { Dialog } from "primereact/dialog";
 import { MyContext } from "@/pages/_app"
 import Container from "./Container"
 
 const CheckIn = () => {
     const router = useRouter()
-    const [checkInValues, setCheckInValues] = useState<checkInInitval>({
-        mainGuestName: "",
-        mainGuestEmail: "",
-        numberOfGuests: 0,
-        checkInDate: new Date(),
-        checkOutDate: new Date()
-    })
-
-    //@ts-ignore
-    const [checkInValuesObject, setCheckInValuesObject] = useState<[{}]>([
-        {text:"Main guest name", value: "sadasda"},
-        {text:"Number of guests", value: "sadasda"},
-        {text:"Check in date", value: "sadasda"},
-        {text:"Check out date", value: "sadasda"}
+   
+    const [checkInValuesObject, setCheckInValuesObject] = useState<iContainerData[]>([
+        {text:"Main guest name", value: ""},
+        {text:"Number of guests", value: ""},
+        {text:"Check in date", value: ""},
+        {text:"Check out date", value: ""}
     ])
 
 
     const [visible, setVisible] = useState<boolean>(false) 
 
+    // Context where form data is saved in. This way it is accesible on all pages, and is stored if user goes back.
     const { formData, updateFormData } = useContext<any>(MyContext)
 
     useEffect(() => {
@@ -43,17 +35,9 @@ const CheckIn = () => {
         } = router.query
 
         if(mainGuestName){
-            setCheckInValues({
-                mainGuestName: mainGuestName as string,
-                mainGuestEmail: "",
-                numberOfGuests: parseInt(numberOfGuests as string),
-                checkInDate: new Date(checkInDate as string),
-                checkOutDate: new Date(checkOutDate as string)
-            })
-            //@ts-ignore
             setCheckInValuesObject([
                 {text:"Main guest name", value: mainGuestName as string},
-                {text:"Number of guests", value: parseInt(numberOfGuests as string)},
+                {text:"Number of guests", value: numberOfGuests as string},
                 {text:"Check in date", value: new Date(checkInDate as string).toDateString()},
                 {text:"Check out date", value:  new Date(checkOutDate as string).toDateString()}
             ])
@@ -65,10 +49,6 @@ const CheckIn = () => {
             })
         }
     }, [router])
-
-
-    
-  
 
     return (
         
