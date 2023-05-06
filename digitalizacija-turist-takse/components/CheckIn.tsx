@@ -39,7 +39,7 @@ const CheckIn = () => {
                 checkOutDate: new Date(checkOutDate as string)
             })
         } 
-    }, [router])
+    }, [router, updateFormData])
 
     return (
         

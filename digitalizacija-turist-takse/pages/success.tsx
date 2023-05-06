@@ -61,7 +61,8 @@ const Success: NextPage = () => {
           })
         
     }
-  }, [storedData])
+ 
+  }, [storedData, db, sentAjpes, updateCheckin])
   
 
   return(

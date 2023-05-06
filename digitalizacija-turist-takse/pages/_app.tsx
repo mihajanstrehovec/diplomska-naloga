@@ -28,8 +28,6 @@ function MyProvider(props:any) {
     guests: []
   })
 
-  const [homePagePath, setHomePagePath] = useState<string>()
-
   const updateFormData = (data:any) => {
     // Use the callback function form of setFormData to update the state asynchronously
     setFormData(prevState => ({ ...prevState, ...data }))
@@ -37,7 +35,7 @@ function MyProvider(props:any) {
 
   return (
     //@ts-ignore
-    <MyContext.Provider value={{formData, updateFormData, homePagePath, setHomePagePath}}>
+    <MyContext.Provider value={{formData, updateFormData}}>
       {props.children}
     </MyContext.Provider>
   )

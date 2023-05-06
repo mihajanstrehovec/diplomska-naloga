@@ -13,7 +13,7 @@ const NationalityField = ({ name }: { name: string }) => {
     if (selectedCountry) {
       helpers.setValue(selectedCountry.code)
     }
-  }, [selectedCountry])
+  }, [selectedCountry, helpers])
 
   const searchCountry = (event: { query: string }) => {
     let _filteredCountries

@@ -32,7 +32,7 @@ const PaymentPage: NextPage = () => {
         sessionStorage.setItem("formData", JSON.stringify(formData))
       } 
 
-    }, [])
+    }, [formData])
     
 
     return(
