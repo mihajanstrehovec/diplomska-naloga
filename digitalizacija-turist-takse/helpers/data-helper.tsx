@@ -12,3 +12,26 @@ export const queryDataHelper = (query: iCheckinDetails) => {
 
     return initialState
 }
+
+//@ts-ignore
+export const storedDataParser = (data) => {
+    //@ts-ignore
+    data.guests.forEach(guest => {
+        guest.dateOfBirth = new Date(guest.dateOfBirth) 
+        guest.documentNumber = parseInt(guest.documentNumber)
+    });
+    data.checkInDate = new Date (data.checkInDate)
+    data.checkOutDate = new Date (data.checkOutDate)
+    console.log(data)
+
+    return data
+}
+
+//@ts-ignore
+export const paymentDataObject = (checkInData, adult, children) => {
+    return [
+        {total: adult, age: "Adult tourist tax", guests: checkInData.numOfAdults, amount: "1.6"},
+        {total: children, age: "Underage / senior tourist tax", guests: checkInData.numOfChildren, amount: "0.8"},
+        {total: "0", age: "Children tourist tax", guests: checkInData.numOfChildren, amount: "0"}
+    ]
+}

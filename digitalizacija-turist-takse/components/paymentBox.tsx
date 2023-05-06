@@ -4,16 +4,16 @@ import {Button} from 'primereact/button'
 import { paymentData } from '@/interfaces/interfaces-fe'
 import Prices from './Prices'
 import { calculateTotalAdultTax, calculateTotalChildrenTax } from '@/helpers/payment-helper'
+import { paymentDataObject } from '@/helpers/data-helper'
 
 // 4000007050000006
 
 const PaymentBox = (checkInData : paymentData) =>{
 
-
     const adultTax = calculateTotalAdultTax(parseInt(checkInData.nights), parseInt(checkInData.numOfAdults))
     const childrenTax = calculateTotalChildrenTax(parseInt(checkInData.nights), parseInt(checkInData.numOfChildren))
     const tax = Math.round((adultTax + childrenTax)*100)/100
-
+    const paymentInfo = paymentDataObject(checkInData, adultTax, childrenTax)
     
     return (
         <>
@@ -22,19 +22,16 @@ const PaymentBox = (checkInData : paymentData) =>{
                     <div className='col-12 cardTitle'>
                         Payment
                     </div>
-                    <div className='col-10 p-0'>
-                        <Prices total={adultTax.toString() + "€"} age="Adult tourist tax" guests={checkInData.numOfAdults} amount='1.6' nights={checkInData.nights} />
-                    </div>
-                    <div className='col-10 p-0'>
-                        {childrenTax !== 0 && 
-                            <Prices total={childrenTax.toString() + "€"} age="Underage / senior tourist tax" guests={checkInData.numOfChildren} amount='0.8' nights={checkInData.nights}/>
-                        } 
-                    </div>
-                    <div className='col-10 p-0'>
-                        {checkInData.none !== "0" && 
-                            <Prices total={"0€"} age="Children tourist tax" guests={checkInData.none} amount='0' nights={checkInData.nights}/>
-                        }
-                    </div>
+                    {paymentInfo.length > 0 && paymentInfo.map((info, index) => (
+                        <>
+                            {info.guests != "0" && 
+                                <div key={index} className='col-10 p-0'>
+                                    <Prices total={info.total + "€"} age={info.age} guests={info.guests} amount={info.amount} nights={checkInData.nights} />
+                                </div>
+                            }
+                        </>
+                        
+                    ))}
                     <div className='col-10 p-0 mb-6'>
                         <CheckInInfo info={tax  + "€"} infoTxt="TOTAL" divider={false}/>
                     </div>

@@ -16,7 +16,7 @@ const dosis = Dosis({ subsets: ['latin'] })
 import type { AppProps } from 'next/app'
 import React, { createContext, useState } from 'react'
 
-export const MyContext = createContext("Testing")
+export const MyContext = createContext("formData")
 
 function MyProvider(props:any) {
   const [formData, setFormData] = useState({
@@ -28,6 +28,8 @@ function MyProvider(props:any) {
     guests: []
   })
 
+  const [homePagePath, setHomePagePath] = useState<string>()
+
   const updateFormData = (data:any) => {
     // Use the callback function form of setFormData to update the state asynchronously
     setFormData(prevState => ({ ...prevState, ...data }))
@@ -35,7 +37,7 @@ function MyProvider(props:any) {
 
   return (
     //@ts-ignore
-    <MyContext.Provider value={{formData, updateFormData}}>
+    <MyContext.Provider value={{formData, updateFormData, homePagePath, setHomePagePath}}>
       {props.children}
     </MyContext.Provider>
   )
@@ -43,7 +45,7 @@ function MyProvider(props:any) {
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MyProvider >
+    <MyProvider>
       <Component className={dosis.className} {...pageProps} />
     </MyProvider>
   )

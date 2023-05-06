@@ -51,6 +51,7 @@ const mapCheckins = (firestoreData: QuerySnapshot<DocumentData>): Checkin[] => {
 
 const useDB = () => {
   const [checkins, setCheckins] = useState<Checkin[]>([])
+  
   const fetchCheckins = async () => {
     const q = query(collection(db, 'knjiga-gostov'), orderBy('createdAt', 'desc'))
     const data = await getDocs(q)
@@ -65,10 +66,29 @@ const useDB = () => {
   }
 
   const deleteCheckin = async (checkin: Checkin) => {
-    const ref = doc(db, 'knjiga-gostov', checkin.id)
-    await deleteDoc(ref)
+    const checkinRef = doc(db, 'knjiga-gostov', checkin.id)
+    await deleteDoc(checkinRef)
   }
 
+  // // @ts-ignore
+  // const onFormSubmitSuccess = async (data) => {
+  //   // Adding a document into the collection
+  //   try {
+  //     await addDoc(collection(db, 'knjiga-gostov'), {
+  //       mainGuestName: data.mainGuestName,
+  //       mainGuestEmail: data.mainGuestEmail,
+  //       numberOfGuests: data.numberOfGuests,
+  //       checkInDate: data.checkInDate,
+  //       checkOutDate: data.checkOutDate,
+  //       guests: data.guests,
+  //       ajpes: false,
+  //       createdAt: new Date()
+  //     });
+  //   } catch (error) {
+  //       return false
+  //   }
+  // }
+  
   // @ts-ignore
   const onFormSubmitSuccess = async (data) => {
     // Adding a document into the collection
@@ -93,9 +113,7 @@ const useDB = () => {
   const fetchCheckin = async (checkinID: string) =>{
     const checkinRef = doc(db, "knjiga-gostov", checkinID)
     let checkIn = await getDoc(checkinRef)
-    return checkIn
-   
-    
+    return checkIn 
   }
 
   useEffect(() => {

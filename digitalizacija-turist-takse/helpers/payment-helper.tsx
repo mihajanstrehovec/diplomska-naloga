@@ -7,18 +7,14 @@ export const calculateTotalAdultTax = (numOfNights: number, numOfAdults: number)
 
 export const calculateTotalChildrenTax = (numOfNights: number, numOfChildren: number) => {
   return Math.round((numOfNights * numOfChildren * prices.tax.children)*100)/100
-  
 }
 
-//@ts-ignore
 export const calculateTotal = (details : paymentData) => {
   const { nights, numOfAdults, numOfChildren } = details
-  
   let total = calculateTotalAdultTax(parseInt(nights), parseInt(numOfAdults))
   if (parseInt(numOfChildren) > 0) {
     total += calculateTotalChildrenTax(parseInt(nights), parseInt(numOfChildren))
   }
-
   return total
 }
 

@@ -13,22 +13,18 @@ const AdminPage: NextPage = () => {
   const { checkins, deleteCheckin, refetch, updateCheckin } = useDB()
   const toast = useRef<Toast>(null)
   const toastBC = useRef<Toast>(null)
-  
-  const rowToggled = (e: DataTableRowEvent ) => {
-    setExpandedRows(e.data)
-  }
 
   const rowExpansionTemplate = (data: Checkin) => {
     return (
       <div className="orders-subtable col-12">
         <DataTable value={data.guests} responsiveLayout="scroll" className="col-12">
-          <Column field="firstName" header="First name"></Column>
-          <Column field="lastName" header="Last name"></Column>
-          <Column field="gender" header="Gender"></Column>
-          <Column field="dateOfBirth" header="Date of birth"></Column>
-          <Column field="nationality" header="Nationality"></Column>
-          <Column field="documentType" header="Document type"></Column>
-          <Column field="documentNumber" header="Document number"></Column>
+          <Column field="firstName" header="First name"/>
+          <Column field="lastName" header="Last name"/>
+          <Column field="gender" header="Gender"/>
+          <Column field="dateOfBirth" header="Date of birth"/>
+          <Column field="nationality" header="Nationality"/>
+          <Column field="documentType" header="Document type"/>
+          <Column field="documentNumber" header="Document number"/>
         </DataTable>
       </div>
     )
@@ -173,34 +169,28 @@ const AdminPage: NextPage = () => {
   }
 
   return (
-
     <Layout>
-      
-      <div className="card mb-6">
-        <div className="datatable-rowexpansion-demo mb-10vh ">
-          <div className="flex justify-content-center">
-            <DataTable
-              value={checkins}
-              expandedRows={expandedRows}
-              onRowToggle={rowToggled}
-              responsiveLayout="scroll"
-              scrollable
-              scrollHeight="70vh"
-              rowExpansionTemplate={rowExpansionTemplate}
-              dataKey="id"
-              className="md:col-6 admin-table border shadow-4 table p-0 mb-5"
-              size="large"
-              >
-              <Column expander style={{ width: '3em' }} />
-              <Column field="mainGuestName" header="Main guest" />
-              <Column field="numberOfGuests" header="Number of guests" />
-              <Column field="checkInDate" header="Check in date" />
-              <Column field="checkOutDate" header="Check out date" />
-              <Column header="Delete" body={delBtn}/>
-              <Column header="Send to AJPES" body={sendBtn}/>
-            </DataTable>
-          </div>
-        </div>
+      <div className="flex justify-content-center">
+        <DataTable
+          value={checkins}
+          expandedRows={expandedRows}
+          onRowToggle={(e: DataTableRowEvent) => 
+                        {setExpandedRows(e.data)}}
+          scrollable
+          scrollHeight="70vh"
+          rowExpansionTemplate={rowExpansionTemplate}
+          dataKey="id"
+          className="md:col-6 admin-table shadow-4 table p-0 mb-5"
+          size="large"
+          >
+          <Column expander style={{ width: '3em' }} />
+          <Column field="mainGuestName" header="Main guest" />
+          <Column field="numberOfGuests" header="Number of guests" />
+          <Column field="checkInDate" header="Check in date" />
+          <Column field="checkOutDate" header="Check out date" />
+          <Column header="Delete" body={delBtn}/>
+          <Column header="Send to AJPES" body={sendBtn}/>
+        </DataTable>
       </div>
       <Toast ref={toastBC} position="bottom-center" />
       <Toast ref={toast} position="bottom-right" />

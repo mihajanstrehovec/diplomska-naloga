@@ -1,7 +1,7 @@
 import type {NextPage} from 'next'
 import Layout from '@/components/Layout'
-import CheckInOverview from '@/components/checkInOverview'
-import PaymentBox from '@/components/paymentBox'
+import CheckInOverview from '@/components/CheckInOverview'
+import PaymentBox from '@/components/PaymentBox'
 import { paymentData } from '@/interfaces/interfaces-fe'
 import { calculateTotal, getGuestAge } from '@/helpers/payment-helper'
 import { useContext, useEffect } from 'react'
@@ -11,7 +11,7 @@ import NavBar from '@/components/NavBar'
 
 const PaymentPage: NextPage = () => {
 
-  
+    
     const { formData, updateFormData } = useContext<any>(MyContext);
 
     const data : paymentData = {

@@ -18,8 +18,8 @@ const TextField = ({
     const [field, meta] = useField(name)
 
     return(
-        <div className="flex flex-wrap align-items-center justify-content-center">
-            <div className='flex align-items-center justify-content-center col-12'>
+        <div className="flex-wrap">
+            <div className='col-12'>
                 <InputText
                     name={field.name}
                     id={name}
@@ -34,8 +34,8 @@ const TextField = ({
                 />
             </div>
             {meta.touched && meta.error ? (
-                <small id="username2-help" className="p-error flex align-items-center justify-content-center col-12">
-                {meta.error}
+                <small className="p-error col-12">
+                    {meta.error}
                 </small>
             ) : null}
         </div>

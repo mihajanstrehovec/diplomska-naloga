@@ -1,21 +1,43 @@
 
-import React from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Steps } from "primereact/steps";
+import { useRouter } from "next/router";
+import { MyContext } from "@/pages/_app";
 
 interface activeIndex {
     activeIndex: number
 }
 
 const NavBar = ({activeIndex} : activeIndex) => {
+    const { homePagePath, setHomePagePath } = useContext<any>(MyContext);
+    const router = useRouter()
+
+    useEffect(() => {
+        if(homePagePath  == undefined) {
+            setHomePagePath(router.asPath)
+        }
+        
+    }, [router]) 
 
     const items = [
-        {label: "Checkin"}, {label: "Guests"}, {label: "Payment"}
+        {   
+            label: "Checkin",
+            command: (event) => {router.push(homePagePath)}
+        },
+        {   
+            label: "Guests",
+            command: (event) => {router.push("guestPage")}
+        }, 
+        {   
+            label: "Payment",
+            command: (event) => {router.push("paymentPage")}
+        }
     ];
 
     return (
         <div className="flex grid sticky col-12 top-0 navbar">
             <div className="col-3">
-                <Steps model={items} activeIndex={activeIndex} />
+                <Steps model={items} activeIndex={activeIndex} readOnly={false}/>
             </div>
         </div>
     )

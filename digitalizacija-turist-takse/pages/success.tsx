@@ -1,31 +1,39 @@
 import type {NextPage} from 'next'
 import Layout from '@/components/Layout'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useDB from '@/hooks/dataBase'
 import Plane from '@/components/Plane'
+import { MyContext } from './_app'
+import { storedDataParser } from '@/helpers/data-helper'
 
 const Success: NextPage = () => {
   const { updateCheckin } = useDB()
 
   const router = useRouter()
-  const failed  = router.query["canceled"]
   const [storedData, setStoredData] = useState<any>(undefined)
   const [sentAjpes, setSentAjpes] = useState<Boolean>(false)
+  const [doorCode, setDoorCode] = useState<any>() 
+
+  
 
   const db = useDB()
-
+  const { formData, updateFormData } = useContext<any>(MyContext);
   useEffect(() => {
+    setDoorCode(Math.floor(100000 + Math.random() * 900000))
+    
+    console.log("SUCCESS FORM DATA", sessionStorage.getItem("formData"))
     setStoredData(sessionStorage.getItem("formData"))
     if(storedData){
-      let dataJSON = JSON.parse(storedData)
+      // let dataJSON = JSON.parse(storedData)
       //@ts-ignore
-      dataJSON.guests.forEach(guest => {
-          guest.dateOfBirth = new Date(guest.dateOfBirth) 
-          guest.documentNumber = parseInt(guest.documentNumber)
-      });
-      dataJSON.checkInDate = new Date (dataJSON.checkInDate)
-      dataJSON.checkOutDate = new Date (dataJSON.checkOutDate)
+      let dataJSON = storedDataParser(JSON.parse(storedData))
+      // dataJSON.guests.forEach(guest => {
+      //     guest.dateOfBirth = new Date(guest.dateOfBirth) 
+      //     guest.documentNumber = parseInt(guest.documentNumber)
+      // });
+      // dataJSON.checkInDate = new Date (dataJSON.checkInDate)
+      // dataJSON.checkOutDate = new Date (dataJSON.checkOutDate)
       
       fetch('/api/submit-ajpes', {
         method: 'POST',
@@ -59,10 +67,10 @@ const Success: NextPage = () => {
   return(
     <Layout>
         <div className="flex container align-items-center justify-content-center">
-          {failed ? <h1 id="success">Something went wrong, please try again or contact your host.</h1> : 
+          {router.query["canceled"] ? <h1 id="success">Something went wrong, please try again or contact your host.</h1> : 
             <div>
               <h1 id="success">Tax payment successful, have a wonderful vacation!</h1>
-              <h2 className='tex-align-center' id="success">The code for your doors is <b>543100</b> <small id="success-small"> (you will receive this code on your email) </small></h2>
+              <h2 id="success">The code for your doors is <b>{doorCode}</b> <small id="success-small"> (you will receive this code on your email) </small></h2>
             </div>
           }
         </div>
