@@ -1,11 +1,11 @@
-import type {NextPage} from 'next'
-import Layout from '@/components/Layout'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import useDB from '@/hooks/dataBase'
-import Plane from '@/components/Plane'
-import { storedDataParser } from '@/helpers/data-helper'
-import ErrorMsg from '@/components/ErrorMsg'
+import type {NextPage} from "next"
+import Layout from "@/components/Layout"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import useDB from "@/hooks/dataBase"
+import Plane from "@/components/Plane"
+import { storedDataParser } from "@/helpers/data-helper"
+import ErrorMsg from "@/components/ErrorMsg"
 
 const Success: NextPage = () => {
   const { updateCheckin } = useDB()
@@ -26,10 +26,10 @@ const Success: NextPage = () => {
       if(dataJSON["guests"].length) {
           setIsData(true)
       }
-      fetch('/api/submit-ajpes', {
-        method: 'POST',
+      fetch("/api/submit-ajpes", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ dataJSON })
       })

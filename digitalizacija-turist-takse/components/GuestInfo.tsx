@@ -1,17 +1,17 @@
-import React, { useContext } from 'react'
-import { useRouter } from 'next/router'
-import {FieldArray, Formik, Form as FormikForm} from 'formik'
-import { guestValidationSchema, guestsValidationSchema, submitSchema, validationSchema } from '@/helpers/form-helpers'
-import { storedDataParser } from '@/helpers/data-helper'
-import { iGuest, FormValues} from '@/interfaces/interfaces-fe'
-import { MyContext } from '@/pages/_app'
-import ContinueButton from './ContinueButton'
-import Container from './Container'
-import ErrorMsg from './ErrorMsg'
+import React, { useContext } from "react"
+import { useRouter } from "next/router"
+import {FieldArray, Formik, Form as FormikForm} from "formik"
+import { guestValidationSchema, guestsValidationSchema, submitSchema, validationSchema } from "@/helpers/form-helpers"
+import { storedDataParser } from "@/helpers/data-helper"
+import { iGuest, FormValues} from "@/interfaces/interfaces-fe"
+import { MyContext } from "@/pages/_app"
+import ContinueButton from "./ContinueButton"
+import Container from "./Container"
+import ErrorMsg from "./ErrorMsg"
 
 export let initialState: FormValues = {
-    mainGuestName: '',
-    mainGuestEmail: '',
+    mainGuestName: "",
+    mainGuestEmail: "",
     numberOfGuests: 0,
     checkInDate: new Date(),
     checkOutDate: new Date(),
@@ -74,7 +74,7 @@ const GuestInfo = () =>{
                             </FieldArray>
                         </FormikForm>
                 </Formik>
-                <div className='z-0 col-12 fixed bottom-0 ' >
+                <div className="z-0 col-12 fixed bottom-0 " >
                     <ContinueButton form={"guestsForm"} 
                                     text={"Proceed to tourist tax payment"}/>
                 </div>

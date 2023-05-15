@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { db } from '../firebase/clientApps'
+import { useEffect, useState } from "react"
+import { db } from "../firebase/clientApps"
 import {
   collection,
   DocumentData,
@@ -12,9 +12,9 @@ import {
   deleteDoc,
   addDoc,
   getDoc
-} from 'firebase/firestore'
-import dayjs from 'dayjs'
-import { Guest, Checkin} from '@/interfaces/interfaces-db'
+} from "firebase/firestore"
+import dayjs from "dayjs"
+import { Guest, Checkin} from "@/interfaces/interfaces-db"
 
 
 
@@ -23,7 +23,7 @@ const mapGuests = (guests: any[]): Guest[] => {
     firstName: guest.firstName,
     lastName: guest.lastName,
     gender: guest.gender,
-    dateOfBirth: dayjs(guest.dateOfBirth.toDate()).format('DD. MM. YYYY'),
+    dateOfBirth: dayjs(guest.dateOfBirth.toDate()).format("DD. MM. YYYY"),
     nationality: guest.nationality,
     documentType: guest.documentType,
     documentNumber: guest.documentNumber
@@ -40,8 +40,8 @@ const mapCheckins = (firestoreData: QuerySnapshot<DocumentData>): Checkin[] => {
       mainGuestName: checkin.mainGuestName,
       mainGuestEmail: checkin.mainGuestEmail,
       numberOfGuests: checkin.numberOfGuests,
-      checkInDate:  dayjs(checkin.checkInDate.toDate()).format('DD. MM. YYYY'),
-      checkOutDate: dayjs(checkin.checkOutDate.toDate()).format('DD. MM. YYYY'),
+      checkInDate:  dayjs(checkin.checkInDate.toDate()).format("DD. MM. YYYY"),
+      checkOutDate: dayjs(checkin.checkOutDate.toDate()).format("DD. MM. YYYY"),
       guests: mapGuests(checkin.guests),
       ajpes: checkin.ajpes
     })
@@ -53,7 +53,7 @@ const useDB = () => {
   const [checkins, setCheckins] = useState<Checkin[]>([])
   
   const fetchCheckins = async () => {
-    const q = query(collection(db, 'knjiga-gostov'), orderBy('createdAt', 'desc'))
+    const q = query(collection(db, "knjiga-gostov"), orderBy("createdAt", "desc"))
     const data = await getDocs(q)
     setCheckins(mapCheckins(data))
   }
@@ -66,7 +66,7 @@ const useDB = () => {
   }
 
   const deleteCheckin = async (checkin: Checkin) => {
-    const checkinRef = doc(db, 'knjiga-gostov', checkin.id)
+    const checkinRef = doc(db, "knjiga-gostov", checkin.id)
     await deleteDoc(checkinRef)
   }
 
@@ -75,7 +75,7 @@ const useDB = () => {
   const onFormSubmitSuccess = async (data) => {
     // Adding a document into the collection
     try {
-      const docRef = await addDoc(collection(db, 'knjiga-gostov'), {
+      const docRef = await addDoc(collection(db, "knjiga-gostov"), {
         mainGuestName: data.mainGuestName,
         mainGuestEmail: data.mainGuestEmail,
         numberOfGuests: data.numberOfGuests,

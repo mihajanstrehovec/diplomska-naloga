@@ -1,15 +1,15 @@
-import type {NextPage} from 'next'
-import Layout from '@/components/Layout'
-import CheckInOverview from '@/components/CheckInOverview'
+import type {NextPage} from "next"
+import Layout from "@/components/Layout"
 //@ts-ignore
-import PaymentBox from '@/components/PaymentBox'
-import { paymentData } from '@/interfaces/interfaces-fe'
-import { calculateTotal, getGuestAge } from '@/helpers/payment-helper'
-import { useContext, useEffect } from 'react'
-import { MyContext } from './_app'
-import Plane from '@/components/Plane'
-import NavBar from '@/components/NavBar'
-import ErrorMsg from '@/components/ErrorMsg'
+import CheckInOverview from "@/components/CheckInOverview"
+import PaymentBox from "@/components/PaymentBox"
+import { paymentData } from "@/interfaces/interfaces-fe"
+import { calculateTotal, getGuestAge } from "@/helpers/payment-helper"
+import { useContext, useEffect } from "react"
+import { MyContext } from "./_app"
+import Plane from "@/components/Plane"
+import NavBar from "@/components/NavBar"
+import ErrorMsg from "@/components/ErrorMsg"
 
 const PaymentPage: NextPage = () => {
 
@@ -30,7 +30,7 @@ const PaymentPage: NextPage = () => {
     data.tax = calculateTotal(data)
 
     useEffect(() => {
-      if (typeof sessionStorage !== 'undefined') {
+      if (typeof sessionStorage !== "undefined") {
         sessionStorage.setItem("formData", JSON.stringify(formData))
       } 
 
@@ -39,13 +39,13 @@ const PaymentPage: NextPage = () => {
     return(
       <Layout>
         <NavBar activeIndex={2}/>
-        <div className='flex flex-wrap justify-content-center align-items-center'>
+        <div className="flex flex-wrap justify-content-center align-items-center">
         {parseInt(data.guests) > 0 && 
         <>
-          <div className='md:col-4'>
+          <div className="md:col-4">
             <CheckInOverview {...data}/>
           </div>
-          <div className='md:col-4'>
+          <div className="md:col-4">
             <PaymentBox {...data}/>
           </div>
         </>

@@ -1,5 +1,5 @@
-import prices from 'helpers/prices'
-import { paymentData } from '@/interfaces/interfaces-fe'
+import prices from "helpers/prices"
+import { paymentData } from "@/interfaces/interfaces-fe"
 
 export const calculateTotalAdultTax = (numOfNights: number, numOfAdults: number) => {
   return Math.round((numOfNights * numOfAdults * prices.tax.adults)*100)/100
@@ -19,7 +19,7 @@ export const calculateTotal = (details : paymentData) => {
 }
 
 export const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(amount)
+  return new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(amount)
 }
 
 export const getGuestAge = (formData: any, min: any, max: any) => {

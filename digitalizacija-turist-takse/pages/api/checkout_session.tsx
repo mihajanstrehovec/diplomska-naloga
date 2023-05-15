@@ -1,10 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next"
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
 let stripePriceIDs = {
-    adultTouristTax: 'price_1MoqCcC82Wy83nu4jWsRJ6hI',
-    childrenTouristTax: 'price_1MoqDCC82Wy83nu492oiEQF8'
+    adultTouristTax: "price_1MoqCcC82Wy83nu4jWsRJ6hI",
+    childrenTouristTax: "price_1MoqDCC82Wy83nu492oiEQF8"
 }
 
 
@@ -28,8 +28,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
           const session =  await stripe.checkout.sessions.create({
               line_items: checkoutProducts,
-              customer_email: data.customerEmail || '',
-              mode: 'payment',
+              customer_email: data.customerEmail || "",
+              mode: "payment",
               success_url: `${req.headers.origin}/success`,
               cancel_url: `${req.headers.origin}/payment?canceled=true`,
               automatic_tax: { enabled: true }

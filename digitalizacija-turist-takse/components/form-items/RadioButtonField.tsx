@@ -1,6 +1,6 @@
-import React from 'react'
-import { RadioButton } from 'primereact/radiobutton'
-import { useField } from 'formik'
+import React from "react"
+import { RadioButton } from "primereact/radiobutton"
+import { useField } from "formik"
 
 const RadioButtonField = ({ name, label }: { name: string; label: Array<string> }) => {
   const [field, meta] = useField(name)
@@ -13,8 +13,8 @@ const RadioButtonField = ({ name, label }: { name: string; label: Array<string> 
           onBlur={field.onBlur}
           name={name}
           value={label[0]}
-          checked={field.value === 'male'}
-          className={meta.touched && meta.error ? 'p-invalid' : ''}
+          checked={field.value === "male"}
+          className={meta.touched && meta.error ? "p-invalid" : ""}
         />
 
         <label htmlFor={name + label[0]}>{label[0]}</label>
@@ -25,8 +25,8 @@ const RadioButtonField = ({ name, label }: { name: string; label: Array<string> 
           onBlur={field.onBlur}
           name={name}
           value={label[1]}
-          checked={field.value === 'female'}
-          className={meta.touched && meta.error ? 'p-invalid ml-4' : 'ml-4'}
+          checked={field.value === "female"}
+          className={meta.touched && meta.error ? "p-invalid ml-4" : "ml-4"}
         />
         <label htmlFor={name + label[1]}>{label[1]}</label>
       </div>

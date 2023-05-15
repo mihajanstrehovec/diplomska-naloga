@@ -34,13 +34,13 @@ export interface FormValues extends iCheckinDetails {
 }
   
 export const emptyGuest: iGuest = {
-    firstName: '',
-    lastName: '',
-    gender: '',
+    firstName: "",
+    lastName: "",
+    gender: "",
     dateOfBirth: undefined,
-    nationality: '',
-    documentType: '',
-    documentNumber: ''
+    nationality: "",
+    documentType: "",
+    documentNumber: ""
 }
 
 export interface paymentData {

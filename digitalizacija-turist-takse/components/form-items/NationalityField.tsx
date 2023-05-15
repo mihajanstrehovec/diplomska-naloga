@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { AutoComplete } from 'primereact/autocomplete'
-import { CountryService, iCountry } from 'service/CountryService'
-import { useField } from 'formik'
+import React, { useEffect, useState } from "react"
+import { AutoComplete } from "primereact/autocomplete"
+import { CountryService, iCountry } from "service/CountryService"
+import { useField } from "formik"
 
 const NationalityField = ({ name }: { name: string }) => {
   const [countries, setCountries] = useState<iCountry[]>([])
@@ -34,8 +34,8 @@ const NationalityField = ({ name }: { name: string }) => {
 
   const itemTemplate = (item: iCountry) => {
     return (
-      <div className="country-item" style={{ display: 'flex', gap: 10 }}>
-        <img alt={item.name} src={'/img/flag_placeholder.png'} className={`flag flag-${item.code.toLowerCase()}`} />
+      <div className="country-item" style={{ display: "flex", gap: 10 }}>
+        <img alt={item.name} src={"/img/flag_placeholder.png"} className={`flag flag-${item.code.toLowerCase()}`} />
         <div>{item.name}</div>
       </div>
     )
@@ -43,7 +43,7 @@ const NationalityField = ({ name }: { name: string }) => {
 
   return (
     <div className="flex flex-wrap align-items-center justify-content-center">
-            <div className='flex align-items-center justify-content-center col-12'>
+            <div className="flex align-items-center justify-content-center col-12">
               <AutoComplete
                 value={countries.find((c) => c.code === field.value)?.name}
                 suggestions={filteredCountries}
@@ -55,7 +55,7 @@ const NationalityField = ({ name }: { name: string }) => {
                 itemTemplate={itemTemplate}
                 onChange={(e) => setSelectedCountry(e.value)}
                 aria-label="Countries"
-                className={"fieldStyle" && meta.touched && meta.error ? 'p-invalid fieldStyle' : 'fieldStyle'}
+                className={"fieldStyle" && meta.touched && meta.error ? "p-invalid fieldStyle" : "fieldStyle"}
                 placeholder="Nationality"
               />
               {meta.touched && meta.error ? <small className="p-error block">{meta.error}</small> : null}

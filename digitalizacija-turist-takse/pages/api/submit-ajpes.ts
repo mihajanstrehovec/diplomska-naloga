@@ -1,12 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import customParseFormat from 'dayjs/plugin/customParseFormat'
-import dayjs from 'dayjs'
-import * as taxCal from 'helpers/payment-helper'
-import { Checkin } from '@/interfaces/interfaces-db'
-const axios = require('axios')
-const fs = require('fs')
-const https = require('https')
-const parser = require('xml2json')
+import { NextApiRequest, NextApiResponse } from "next"
+import customParseFormat from "dayjs/plugin/customParseFormat"
+import dayjs from "dayjs"
+import * as taxCal from "helpers/payment-helper"
+import { Checkin } from "@/interfaces/interfaces-db"
+const axios = require("axios")
+const fs = require("fs")
+const https = require("https")
+const parser = require("xml2json")
 
 dayjs.extend(customParseFormat)
 
@@ -16,42 +16,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let reservation : Checkin
 
   const changeDateFormat = (date: string) => {
-    const [day, month, year] = date.split('. ')
-    return year + '-' + month + '-' + day 
+    const [day, month, year] = date.split(". ")
+    return year + "-" + month + "-" + day 
   }
 
-  if(req.body['dataJSON']){
-    reservation = req.body['dataJSON']
-    checkin = reservation['checkInDate'].split("T")[0]
-    checkout = reservation['checkOutDate'].split("T")[0]
+  if(req.body["dataJSON"]){
+    reservation = req.body["dataJSON"]
+    checkin = reservation["checkInDate"].split("T")[0]
+    checkout = reservation["checkOutDate"].split("T")[0]
   } else {
     reservation = req.body["requestBody"]
-    checkin = changeDateFormat(reservation['checkInDate'])
-    checkout = changeDateFormat(reservation['checkOutDate'])
+    checkin = changeDateFormat(reservation["checkInDate"])
+    checkout = changeDateFormat(reservation["checkOutDate"])
   }
 
   // credentials
-  const username: string = 'apiTest'
-  const password: string = 'Test123!'
-  const url: string = 'https://wwwt.ajpes.si/rno/rnoApi/eTurizem/wsETurizemPorocanje.asmx'
+  const username: string = "apiTest"
+  const password: string = "Test123!"
+  const url: string = "https://wwwt.ajpes.si/rno/rnoApi/eTurizem/wsETurizemPorocanje.asmx"
 
   let guests: string = ``
 
   //@ts-ignore
-  reservation['guests'].forEach((guest, index) => {
+  reservation["guests"].forEach((guest, index) => {
     // Creating XML rows based on number of guests, zst is incremented and starts from 1
 
     // reformating date of birth from DD. MM. YYYY to YYYY-MM-DD
     // and calculating age from acquired dates
     let dateOfBirth = ""
-    if(guest['dateOfBirth'].includes('T')){
-      dateOfBirth =  guest['dateOfBirth'].split("T")[0]
+    if(guest["dateOfBirth"].includes("T")){
+      dateOfBirth =  guest["dateOfBirth"].split("T")[0]
     } else { 
-      dateOfBirth = changeDateFormat(guest['dateOfBirth'])
+      dateOfBirth = changeDateFormat(guest["dateOfBirth"])
     }
     
     //@ts-ignore
-    const difference: number = Math.abs(dayjs() - dayjs(dateOfBirth, 'YYYY-MM-DD'))
+    const difference: number = Math.abs(dayjs() - dayjs(dateOfBirth, "YYYY-MM-DD"))
     const age = Math.floor(difference / (1000 * 3600 * 24) / 365)
 
     let tax = 0
@@ -69,15 +69,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // creating and attaching current guest info row to all guests
     guests += `<row idNO="0" zst="${index + 1}"
-    ime="${guest['firstName']}" 
-    pri="${guest['lastName']}" 
-    sp="${guest['gender']}" 
+    ime="${guest["firstName"]}" 
+    pri="${guest["lastName"]}" 
+    sp="${guest["gender"]}" 
     dtRoj="${dateOfBirth}" 
-    drzava="${guest['nationality']}" 
-    vrstaDok="${guest['documentType']}" 
-    idStDok="${guest['documentNumber']}" 
-    casPrihoda="${checkin + 'T15:00:00'}" 
-    casOdhoda="${checkout + 'T11:00:00'}" 
+    drzava="${guest["nationality"]}" 
+    vrstaDok="${guest["documentType"]}" 
+    idStDok="${guest["documentNumber"]}" 
+    casPrihoda="${checkin + "T15:00:00"}" 
+    casOdhoda="${checkout + "T11:00:00"}" 
     ttObracun="${settlement}" 
     ttVisina="${tax}" 
     status="1"/>`
@@ -87,7 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const format: number = 2 // Answer in JSON (1 for XML)
 
   const headers = {
-    'Content-Type': 'text/xml',
+    "Content-Type": "text/xml",
   }
 
   // final XML body
@@ -109,16 +109,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // agent that carries certificate needed for AJPES
   const agent = new https.Agent({
-    pfx: fs.readFileSync(process.cwd() + '/pages/api/AjpesTest.pfx'),
+    pfx: fs.readFileSync(process.cwd() + "/pages/api/AjpesTest.pfx"),
     rejectUnauthorized: false,
-    passphrase: 'ajpestest',
+    passphrase: "ajpestest",
     keepAlive: true
   })
 
   
   await axios({
     httpsAgent: agent,
-    method: 'post',
+    method: "post",
     url,
     headers,
     data: XML

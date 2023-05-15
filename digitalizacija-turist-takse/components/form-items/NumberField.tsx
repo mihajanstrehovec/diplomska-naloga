@@ -1,6 +1,6 @@
-import React from 'react'
-import { InputNumber } from 'primereact/inputnumber'
-import { useField } from 'formik'
+import React from "react"
+import { InputNumber } from "primereact/inputnumber"
+import { useField } from "formik"
 
 const NumberField = ({
     name,
@@ -20,14 +20,14 @@ const NumberField = ({
   
     return (
         <div className="flex flex-wrap align-items-center justify-content-center">
-            <div className='flex align-items-center justify-content-center col-12'>
+            <div className="flex align-items-center justify-content-center col-12">
                 <InputNumber
                     onValueChange={(e) => helpers.setValue(e.value)}
                     value={field.value}
                     useGrouping={false}
                     min={min}
                     max={max}
-                    className={"fieldStyle" && meta.touched &&  meta.error ? 'p-invalid fieldStyle' : "fieldStyle"}
+                    className={"fieldStyle" && meta.touched &&  meta.error ? "p-invalid fieldStyle" : "fieldStyle"}
                     placeholder={placeholder}
                     prefix={prefix}
                 />

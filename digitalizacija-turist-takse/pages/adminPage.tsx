@@ -1,12 +1,12 @@
-import type {NextPage} from 'next'
-import Layout from '@/components/Layout'
-import { useState, useRef } from 'react'
-import { DataTable, DataTableRowEvent} from 'primereact/datatable'
-import { Column } from 'primereact/column'
-import useDB from '@/hooks/dataBase'
-import { Checkin } from '@/interfaces/interfaces-db'
-import { Button } from 'primereact/button'
-import {Toast} from 'primereact/toast'
+import type {NextPage} from "next"
+import Layout from "@/components/Layout"
+import { useState, useRef } from "react"
+import { DataTable, DataTableRowEvent} from "primereact/datatable"
+import { Column } from "primereact/column"
+import useDB from "@/hooks/dataBase"
+import { Checkin } from "@/interfaces/interfaces-db"
+import { Button } from "primereact/button"
+import {Toast} from "primereact/toast"
 
 const AdminPage: NextPage = () => {
   const [expandedRows, setExpandedRows] = useState<{ [key: string]: boolean }>()
@@ -73,13 +73,13 @@ const AdminPage: NextPage = () => {
   const confirmDel = (checkin: Checkin) => {
     if (toastBC.current){
       toastBC.current.show({
-        severity: 'info',
+        severity: "info",
         sticky: true,
-        className: 'border-none delToast',
+        className: "border-none delToast",
         content: (
-            <div className="flex flex-column align-items-center" style={{ flex: '1' }}>
+            <div className="flex flex-column align-items-center" style={{ flex: "1" }}>
                 <div className="text-center">
-                    <i className="pi pi-exclamation-triangle" style={{ fontSize: '2rem' }}></i>
+                    <i className="pi pi-exclamation-triangle" style={{ fontSize: "2rem" }}></i>
                     <div className="text-xl my-3">Are you sure?</div>
                 </div>
                 <div className="flex gap-2">
@@ -95,13 +95,13 @@ const AdminPage: NextPage = () => {
   const confirmSend = (checkin: Checkin) => {
     if (toastBC.current){
       toastBC.current.show({
-        severity: 'info',
+        severity: "info",
         sticky: true,
-        className: 'border-none delToast',
+        className: "border-none delToast",
         content: (
-            <div className="flex flex-column align-items-center" style={{ flex: '1' }}>
+            <div className="flex flex-column align-items-center" style={{ flex: "1" }}>
                 <div className="text-center">
-                    <i className="pi pi-exclamation-triangle" style={{ fontSize: '2rem' }}></i>
+                    <i className="pi pi-exclamation-triangle" style={{ fontSize: "2rem" }}></i>
                     <div className="text-xl my-3">Are you sure?</div>
                 </div>
                 <div className="flex gap-2">
@@ -121,10 +121,10 @@ const AdminPage: NextPage = () => {
     closeToast(toastBC.current)
     return new Promise((resolve, reject) => {
 
-      fetch('/api/submit-ajpes', {
-        method: 'POST',
+      fetch("/api/submit-ajpes", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ requestBody })
       })
@@ -183,7 +183,7 @@ const AdminPage: NextPage = () => {
           className="md:col-6 admin-table shadow-4 table p-0 mb-5"
           size="large"
           >
-          <Column expander style={{ width: '3em' }} />
+          <Column expander style={{ width: "3em" }} />
           <Column field="mainGuestName" header="Main guest" />
           <Column field="numberOfGuests" header="Number of guests" />
           <Column field="checkInDate" header="Check in date" />

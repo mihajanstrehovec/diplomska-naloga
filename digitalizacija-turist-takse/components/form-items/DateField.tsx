@@ -1,6 +1,6 @@
-import React from 'react'
-import { Calendar } from 'primereact/calendar'
-import { useField } from 'formik'
+import React from "react"
+import { Calendar } from "primereact/calendar"
+import { useField } from "formik"
 
 const DateField = ({
   name,
@@ -17,7 +17,7 @@ const DateField = ({
   const [field, meta] = useField(name)
   return (
     <div className="flex flex-wrap align-items-center justify-content-center">
-        <div className='flex align-items-center justify-content-center col-12'>
+        <div className="flex align-items-center justify-content-center col-12">
             <Calendar
                 value={field.value}
                 placeholder={placeholder}
@@ -25,7 +25,7 @@ const DateField = ({
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 name={name}
-                className={'fieldStyle' && meta.touched && meta.error ? 'p-invalid' : 'fieldStyle'}
+                className={"fieldStyle" && meta.touched && meta.error ? "p-invalid" : "fieldStyle"}
                 minDate={minDate}
                 maxDate={maxDate}
             />

@@ -1,9 +1,9 @@
-import type {NextPage} from 'next'
+import type {NextPage} from "next"
 import Layout
-from '@/components/Layout'
-import GuestInfo from '@/components/GuestInfo'
-import Plane from '@/components/Plane'
-import NavBar from '@/components/NavBar'
+from "@/components/Layout"
+import GuestInfo from "@/components/GuestInfo"
+import Plane from "@/components/Plane"
+import NavBar from "@/components/NavBar"
 
 const GuestInfoPage: NextPage = () => {
 
