@@ -1,6 +1,7 @@
 import type {NextPage} from 'next'
 import Layout from '@/components/Layout'
 import CheckInOverview from '@/components/CheckInOverview'
+//@ts-ignore
 import PaymentBox from '@/components/PaymentBox'
 import { paymentData } from '@/interfaces/interfaces-fe'
 import { calculateTotal, getGuestAge } from '@/helpers/payment-helper'
@@ -8,7 +9,6 @@ import { useContext, useEffect } from 'react'
 import { MyContext } from './_app'
 import Plane from '@/components/Plane'
 import NavBar from '@/components/NavBar'
-import { ErrorMessage } from 'formik'
 import ErrorMsg from '@/components/ErrorMsg'
 
 const PaymentPage: NextPage = () => {
