@@ -24,7 +24,7 @@ const NavBar = ({activeIndex} : activeIndex) => {
     return (
         <div className="flex grid sticky col-12 top-0 navbar">
             <div className="col-3">
-                <Steps model={items} activeIndex={activeIndex} readOnly={false}/>
+                <Steps model={items} activeIndex={activeIndex}/>
             </div>
         </div>
     )

@@ -1,0 +1,18 @@
+#error-message{
+    color: white!important;
+    font-weight: 500;
+}
+
+body:has(h1#error-message){
+    background-color: #FFB800;
+    max-height: 97vh;
+}
+
+#success-small{
+    font-weight: 300!important;
+    font-size: 0.7em!important;
+}
+
+.err-body{
+    min-height: 95vh;
+}

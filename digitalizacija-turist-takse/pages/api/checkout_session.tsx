@@ -4,13 +4,11 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 let stripePriceIDs = {
     adultTouristTax: 'price_1MoqCcC82Wy83nu4jWsRJ6hI',
-    childrenTouristTax: 'price_1MoqDCC82Wy83nu492oiEQF8',
-  }
+    childrenTouristTax: 'price_1MoqDCC82Wy83nu492oiEQF8'
+}
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-
-   
       const data = req.body
 
       const checkoutProducts = [
@@ -40,9 +38,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       } catch (err: any) {
           res.status(err.statusCode || 500).json(err.message)
       }
-
-
-
-    
-
 }

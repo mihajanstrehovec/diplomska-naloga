@@ -34,7 +34,7 @@ const GuestForm = ({index} : {
                         <RadioButtonField  name={`guests.${index}.gender`} label={gender}></RadioButtonField>
                     </div>
                     <div className='md:col-5 col-12 p-0'>
-                        <DateField name={`guests.${index}.dateOfBirth`} placeholder='Date of birth'></DateField>
+                        <DateField name={`guests.${index}.dateOfBirth`} maxDate={new Date()} placeholder='Date of birth'></DateField>
                     </div> 
                 </div>
 

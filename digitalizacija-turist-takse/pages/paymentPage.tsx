@@ -8,6 +8,8 @@ import { useContext, useEffect } from 'react'
 import { MyContext } from './_app'
 import Plane from '@/components/Plane'
 import NavBar from '@/components/NavBar'
+import { ErrorMessage } from 'formik'
+import ErrorMsg from '@/components/ErrorMsg'
 
 const PaymentPage: NextPage = () => {
 
@@ -33,24 +35,28 @@ const PaymentPage: NextPage = () => {
       } 
 
     }, [formData])
-    
 
     return(
-
       <Layout>
         <NavBar activeIndex={2}/>
         <div className='flex flex-wrap justify-content-center align-items-center'>
+        {parseInt(data.guests) > 0 && 
+        <>
           <div className='md:col-4'>
             <CheckInOverview {...data}/>
           </div>
           <div className='md:col-4'>
             <PaymentBox {...data}/>
           </div>
+        </>
+        }
+        {parseInt(data.guests) == 0 && 
+          <ErrorMsg message = "Please complete the previous steps first." />
+        }
         </div>
         <Plane iteration="3"/>
-      </Layout> 
+      </Layout>
   )
-
 }
 
 export default PaymentPage

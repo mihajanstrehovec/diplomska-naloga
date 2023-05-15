@@ -22,8 +22,6 @@ export const storedDataParser = (data) => {
     });
     data.checkInDate = new Date (data.checkInDate)
     data.checkOutDate = new Date (data.checkOutDate)
-    console.log(data)
-
     return data
 }
 

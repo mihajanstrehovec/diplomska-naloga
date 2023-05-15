@@ -1,40 +1,31 @@
 import type {NextPage} from 'next'
 import Layout from '@/components/Layout'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useDB from '@/hooks/dataBase'
 import Plane from '@/components/Plane'
-import { MyContext } from './_app'
 import { storedDataParser } from '@/helpers/data-helper'
+import ErrorMsg from '@/components/ErrorMsg'
 
 const Success: NextPage = () => {
   const { updateCheckin } = useDB()
 
   const router = useRouter()
   const [storedData, setStoredData] = useState<any>(undefined)
-  const [sentAjpes, setSentAjpes] = useState<Boolean>(false)
   const [doorCode, setDoorCode] = useState<any>() 
-
-  
-
   const db = useDB()
-  const { formData, updateFormData } = useContext<any>(MyContext);
+  const [isData, setIsData] = useState<boolean>(false)
+
   useEffect(() => {
+
     setDoorCode(Math.floor(100000 + Math.random() * 900000))
-    
-    console.log("SUCCESS FORM DATA", sessionStorage.getItem("formData"))
     setStoredData(sessionStorage.getItem("formData"))
+
     if(storedData){
-      // let dataJSON = JSON.parse(storedData)
-      //@ts-ignore
       let dataJSON = storedDataParser(JSON.parse(storedData))
-      // dataJSON.guests.forEach(guest => {
-      //     guest.dateOfBirth = new Date(guest.dateOfBirth) 
-      //     guest.documentNumber = parseInt(guest.documentNumber)
-      // });
-      // dataJSON.checkInDate = new Date (dataJSON.checkInDate)
-      // dataJSON.checkOutDate = new Date (dataJSON.checkOutDate)
-      
+      if(dataJSON["guests"].length) {
+          setIsData(true)
+      }
       fetch('/api/submit-ajpes', {
         method: 'POST',
         headers: {
@@ -46,26 +37,26 @@ const Success: NextPage = () => {
           const res = await response.json()
           if(response.status == 200){
             if (res["@failure"] == 0){
-              setSentAjpes(true)
+              const id : string = await db.onFormSubmitSuccess(dataJSON) as string
+              console.log("AJPEEES")
+              await updateCheckin(id)
             } else {
               console.log("ERROR",`${res["row"][0]["@msgTxt"]}`)
+              await db.onFormSubmitSuccess(dataJSON)
             }
           } else {
             console.log(res)
           }
-        }).then(async () => {
-            const id : string = await db.onFormSubmitSuccess(dataJSON) as string
-            if (sentAjpes){
-              await updateCheckin(id)
-            }
-          })
-        
+        })
     }
  
-  }, [storedData, db, sentAjpes, updateCheckin])
+  }, [storedData])
   
 
   return(
+    <>
+    
+    {isData ? 
     <Layout>
         <div className="flex container align-items-center justify-content-center">
           {router.query["canceled"] ? <h1 id="success">Something went wrong, please try again or contact your host.</h1> : 
@@ -76,7 +67,11 @@ const Success: NextPage = () => {
           }
         </div>
         <Plane iteration="4"/>
-    </Layout>
+    </Layout> : <ErrorMsg message = "Please complete the check in and tourist tax payment first."/>
+    
+    }
+    </>
+    
   )
 
 }

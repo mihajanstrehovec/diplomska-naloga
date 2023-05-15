@@ -14,16 +14,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let checkin = ""
   let checkout = ""
   let reservation : Checkin
+
+  const changeDateFormat = (date: string) => {
+    const [day, month, year] = date.split('. ')
+    return year + '-' + month + '-' + day 
+  }
+
   if(req.body['dataJSON']){
     reservation = req.body['dataJSON']
     checkin = reservation['checkInDate'].split("T")[0]
     checkout = reservation['checkOutDate'].split("T")[0]
   } else {
     reservation = req.body["requestBody"]
-    const [dayCheckIn, monthCheckIn, yearCheckIn] = reservation['checkInDate'].split('. ')
-    checkin = yearCheckIn + '-' + monthCheckIn + '-' + dayCheckIn
-    const [dayCheckOut, monthCheckOut, yearCheckOut] = reservation['checkOutDate'].split('. ')
-    checkout = yearCheckOut + '-' + monthCheckOut + '-' + dayCheckOut
+    checkin = changeDateFormat(reservation['checkInDate'])
+    checkout = changeDateFormat(reservation['checkOutDate'])
   }
 
   // credentials
@@ -39,16 +43,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // reformating date of birth from DD. MM. YYYY to YYYY-MM-DD
     // and calculating age from acquired dates
-    const [day, month, year] = guest['dateOfBirth'].split('. ')
-    let newDate = ""
-    if(month){
-      newDate = year + '-' + month + '-' + day
-    }else {
-      newDate =  guest['dateOfBirth'].split("T")[0]
+    let dateOfBirth = ""
+    if(guest['dateOfBirth'].includes('T')){
+      dateOfBirth =  guest['dateOfBirth'].split("T")[0]
+    } else { 
+      dateOfBirth = changeDateFormat(guest['dateOfBirth'])
     }
     
     //@ts-ignore
-    const difference: number = Math.abs(dayjs() - dayjs(newDate, 'YYYY-MM-DD'))
+    const difference: number = Math.abs(dayjs() - dayjs(dateOfBirth, 'YYYY-MM-DD'))
     const age = Math.floor(difference / (1000 * 3600 * 24) / 365)
 
     let tax = 0
@@ -69,7 +72,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ime="${guest['firstName']}" 
     pri="${guest['lastName']}" 
     sp="${guest['gender']}" 
-    dtRoj="${newDate}" 
+    dtRoj="${dateOfBirth}" 
     drzava="${guest['nationality']}" 
     vrstaDok="${guest['documentType']}" 
     idStDok="${guest['documentNumber']}" 
@@ -112,7 +115,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     keepAlive: true
   })
 
-  //@ts-ignore
+  
   await axios({
     httpsAgent: agent,
     method: 'post',
@@ -121,11 +124,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     data: XML
   })//@ts-ignore
     .then((response) => {
-      // converting xml response to JSON and returning data
-      let json = parser.toJson(response.data)
-      let json2 = JSON.parse(json)
-      let json3 = JSON.parse(json2["soap:Envelope"]["soap:Body"]["oddajPorociloResponse"]["oddajPorociloResult"])
-      return res.status(200).json(json3["data"])
+      let json = JSON.parse(
+                  JSON.parse(
+                    parser.toJson(response.data))["soap:Envelope"]
+                                                 ["soap:Body"]
+                                                 ["oddajPorociloResponse"]
+                                                 ["oddajPorociloResult"])
+      return res.status(200).json(json["data"])
     })//@ts-ignore
     .catch((error) => {
       return res.status(400).json(error)

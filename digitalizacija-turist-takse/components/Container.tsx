@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import CheckInInfo from "./CheckInInfo";
 import { iContainerData, iGuest } from "@/interfaces/interfaces-fe";
 import GuestForm from "./GuestForm";
+import { useRouter } from "next/router"
 
 const Container = ({title, data, email, index, form=false, size} : {
         title:string,
@@ -11,6 +12,11 @@ const Container = ({title, data, email, index, form=false, size} : {
         form?:boolean,
         size?:string
     }) => {
+    
+    
+   
+
+    
         
 
     return(

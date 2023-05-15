@@ -8,13 +8,19 @@ import NavBar from '@/components/NavBar'
 // 4000007050000006
 
 const HomePage: NextPage = () => {
+
   return(
     <Layout>
         <NavBar activeIndex={0}/>
         <CheckIn/>
         <Plane iteration="1"/>
-    </Layout>
+    </Layout> 
   )
 }
 
+
+
+
+
 export default HomePage
+

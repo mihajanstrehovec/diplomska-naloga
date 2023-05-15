@@ -70,24 +70,6 @@ const useDB = () => {
     await deleteDoc(checkinRef)
   }
 
-  // // @ts-ignore
-  // const onFormSubmitSuccess = async (data) => {
-  //   // Adding a document into the collection
-  //   try {
-  //     await addDoc(collection(db, 'knjiga-gostov'), {
-  //       mainGuestName: data.mainGuestName,
-  //       mainGuestEmail: data.mainGuestEmail,
-  //       numberOfGuests: data.numberOfGuests,
-  //       checkInDate: data.checkInDate,
-  //       checkOutDate: data.checkOutDate,
-  //       guests: data.guests,
-  //       ajpes: false,
-  //       createdAt: new Date()
-  //     });
-  //   } catch (error) {
-  //       return false
-  //   }
-  // }
   
   // @ts-ignore
   const onFormSubmitSuccess = async (data) => {

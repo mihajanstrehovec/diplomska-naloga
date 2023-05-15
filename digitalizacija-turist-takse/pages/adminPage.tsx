@@ -30,7 +30,7 @@ const AdminPage: NextPage = () => {
     )
   }
 
-  const deleteCheckIn = (checkin: Checkin) => {
+  const deleteCheckIn = async (checkin: Checkin) => {
     //@ts-ignore
     closeToast(toastBC.current)
     deleteCheckin(checkin)

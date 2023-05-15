@@ -1,4 +1,5 @@
 import React from "react"
+import Image from 'next/image';
 
 interface PlaneProps{
     iteration: string
@@ -7,7 +8,7 @@ interface PlaneProps{
 const Plane = ({ iteration } : PlaneProps) => {
     return(
         <div className="plane bottom-0 right-0">
-          <img src={`/img/plane_frame_${iteration}.png`}></img>
+          <Image src={`/img/plane_frame_${iteration}.png`} alt="plane illustration" width={400} height={400} priority={true} />
         </div>
     )
 }
